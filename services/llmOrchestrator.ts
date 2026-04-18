@@ -146,7 +146,7 @@ function getCandidateModelsForStage(
 function getSystemPrompt(stage: PipelineStage): string {
   if (stage === 'analyzer') {
       return [
-        'You are OppuCopilot Analyzer (open-source model).',
+        'You are Pixel Pioneers Analyzer (open-source model).',
       'Classify each input item as opportunity or spam/non-opportunity.',
       'Extract structured machine-readable fields from messy natural language.',
       'Resolve relative deadlines (e.g., tomorrow, next Friday, in 48 hours) and output strictDateISO when possible.',
@@ -238,7 +238,10 @@ function clampText(value: string, maxLength: number): string {
 async function extractPdfText(file: File): Promise<string> {
   const pdfjsLib = await import('pdfjs-dist/legacy/build/pdf.mjs');
   const buffer = await file.arrayBuffer();
-  const loadingTask = pdfjsLib.getDocument({ data: buffer } as any);
+  const loadingTask = pdfjsLib.getDocument({
+    data: buffer,
+    disableWorker: true,
+  } as any);
   const pdf = await loadingTask.promise;
 
   const chunks: string[] = [];

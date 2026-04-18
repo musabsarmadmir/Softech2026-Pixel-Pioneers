@@ -19,7 +19,7 @@ export default function HomePage() {
               </span>
             </div>
             <h1 className="max-w-3xl text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
-              Opportunity Inbox Copilot that turns inbox noise into ranked next steps.
+              Pixel Pioneers turns inbox noise into ranked next steps.
             </h1>
             <p className="max-w-2xl text-base leading-7 text-zinc-300 md:text-lg">
               Parse messy student inboxes, detect real opportunities, extract the fields that matter, and rank them by fit,

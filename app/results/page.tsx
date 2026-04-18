@@ -24,7 +24,7 @@ export default function ResultsPage() {
       pixelRatio: 2,
     });
     const anchor = document.createElement('a');
-    anchor.download = `oppucopilot-digest-${Date.now()}.png`;
+    anchor.download = `pixel-pioneers-digest-${Date.now()}.png`;
     anchor.href = dataUrl;
     anchor.click();
   }

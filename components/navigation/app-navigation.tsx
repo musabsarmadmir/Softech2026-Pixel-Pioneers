@@ -36,7 +36,7 @@ export function AppNavigation() {
             <Sparkles className="h-4 w-4" />
           </span>
           <div className="flex flex-col leading-tight">
-            <span className="text-sm font-semibold tracking-wide">OppuCopilot AI</span>
+            <span className="text-sm font-semibold tracking-wide">Pixel Pioneers</span>
             <span className="text-[10px] uppercase text-zinc-400">SOFTEC 2026</span>
           </div>
         </Link>

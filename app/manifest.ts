@@ -2,9 +2,9 @@ import type { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'OppuCopilot AI',
-    short_name: 'OppuCopilot',
-    description: 'Opportunity Inbox Copilot for SOFTEC 2026',
+    name: 'Pixel Pioneers',
+    short_name: 'PixelPioneers',
+    description: 'Pixel Pioneers for SOFTEC 2026',
     start_url: '/',
     display: 'standalone',
     background_color: '#020617',

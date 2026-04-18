@@ -25,7 +25,7 @@ type AppState = {
   clearHistory: () => void;
 };
 
-const STORAGE_KEY = 'oppucopilot_state_v1';
+const STORAGE_KEY = 'pixel_pioneers_state_v1';
 
 const AppStateContext = createContext<AppState | null>(null);
 

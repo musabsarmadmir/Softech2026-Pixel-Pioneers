@@ -17,8 +17,8 @@ const bodyFont = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'OppuCopilot AI',
-  description: 'Opportunity Inbox Copilot for SOFTEC 2026',
+  title: 'Pixel Pioneers',
+  description: 'Pixel Pioneers for SOFTEC 2026',
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
