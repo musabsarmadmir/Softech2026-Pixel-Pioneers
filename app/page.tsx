@@ -9,7 +9,7 @@ export default function HomePage() {
       {/* Status Pill */}
       <div className="flex justify-center">
         <p className="inline-flex w-fit items-center rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-primary">
-          Only for our college students
+          Made for FAST Softec AI Hackathon
         </p>
       </div>
 
@@ -19,9 +19,8 @@ export default function HomePage() {
           <h1 className="text-5xl font-black leading-tight tracking-tight md:text-6xl lg:text-7xl">
             Pixel Pioneers turns inbox noise into ranked next steps.
           </h1>
-          <p className="mx-auto max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-            Parse messy student inboxes, detect real opportunities, extract the fields that matter, and rank them by fit,
-            urgency, and completeness. The result is a cleaner workflow, not just another AI summary.
+          <p className="mx-auto max-w-2xl text-lg leading-relaxed text-foreground md:text-xl">
+            Parse student inboxes, detect real opportunities, and turn them into a ranked action list.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button asChild size="lg">
@@ -46,7 +45,7 @@ export default function HomePage() {
                 <Icon className="h-6 w-6 text-primary" />
               </div>
               <p className="font-semibold text-card-foreground">{title as string}</p>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{description as string}</p>
+              <p className="mt-2 text-sm leading-relaxed text-card-foreground">{description as string}</p>
             </div>
           ))}
         </div>
@@ -56,7 +55,7 @@ export default function HomePage() {
       <section className="mx-auto max-w-5xl">
         <Card className="space-y-6 p-8">
           <div className="text-center space-y-4">
-            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Pipeline layers</p>
+            <p className="text-xs font-semibold uppercase tracking-wider text-foreground">Pipeline layers</p>
             <h2 className="text-3xl font-bold tracking-tight text-card-foreground">A two-pass flow that stays easy to trust.</h2>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -102,19 +101,19 @@ export default function HomePage() {
       {/* Process Steps */}
       <section className="grid gap-6 md:grid-cols-3">
         <Card className="space-y-4 p-6">
-          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">1. Profile Intelligence</p>
+          <p className="text-xs font-semibold uppercase tracking-wider text-foreground">1. Profile Intelligence</p>
           <h3 className="text-xl font-bold text-card-foreground">Structured onboarding</h3>
-          <p className="text-sm leading-relaxed text-muted-foreground">Profile fields, financial need, and experience depth feed the ranking engine.</p>
+          <p className="text-sm leading-relaxed text-foreground">Profile fields, financial need, and experience depth feed the ranking engine.</p>
         </Card>
         <Card className="space-y-4 p-6">
-          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">2. Inbox Parsing</p>
+          <p className="text-xs font-semibold uppercase tracking-wider text-foreground">2. Inbox Parsing</p>
           <h3 className="text-xl font-bold text-card-foreground">Batch extraction</h3>
-          <p className="text-sm leading-relaxed text-muted-foreground">Emails and screenshots are classified into opportunity and non-opportunity buckets.</p>
+          <p className="text-sm leading-relaxed text-foreground">Emails and screenshots are classified into opportunity and non-opportunity buckets.</p>
         </Card>
         <Card className="space-y-4 p-6">
-          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">3. Personalized Ranking</p>
+          <p className="text-xs font-semibold uppercase tracking-wider text-foreground">3. Personalized Ranking</p>
           <h3 className="text-xl font-bold text-card-foreground">Stable output</h3>
-          <p className="text-sm leading-relaxed text-muted-foreground">Weighted scoring and explanation blocks make the final list easier to trust.</p>
+          <p className="text-sm leading-relaxed text-foreground">Weighted scoring and explanation blocks make the final list easier to trust.</p>
         </Card>
       </section>
     </div>

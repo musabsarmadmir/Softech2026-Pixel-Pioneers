@@ -24,7 +24,7 @@ export default function ResultsPage() {
             <div className="space-y-3">
               <p className="text-xs font-semibold uppercase tracking-wider text-primary">Ranked Opportunities</p>
               <h1 className="text-4xl font-bold tracking-tight text-foreground">Priority list with clear next actions.</h1>
-              <p className="max-w-2xl text-muted-foreground leading-relaxed">
+              <p className="max-w-2xl text-foreground leading-relaxed">
                 Sorted by deterministic score: 40% fit, 30% urgency, 30% completeness.
               </p>
             </div>
@@ -34,15 +34,15 @@ export default function ResultsPage() {
           </div>
           <div className="grid gap-4 sm:grid-cols-3">
             <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Total ranked</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-foreground">Total ranked</p>
               <p className="mt-2 text-3xl font-bold text-foreground">{ranked.length}</p>
             </div>
             <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Strict deadlines</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-foreground">Strict deadlines</p>
               <p className="mt-2 text-3xl font-bold text-foreground">{deadlineCount}</p>
             </div>
             <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Highest score</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-foreground">Highest score</p>
               <p className="mt-2 text-3xl font-bold text-primary">{topScore}</p>
             </div>
           </div>
@@ -75,15 +75,14 @@ export default function ResultsPage() {
       </section>
 
       <Card className="space-y-2 p-6" ref={exportRef}>
-        <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-zinc-300">Digest Snapshot</h3>
+        <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">Digest Snapshot</h3>
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
           {ranked.slice(0, 6).map((item, index) => (
-            <div key={item.id} className="rounded-2xl border border-zinc-800 bg-zinc-950/50 p-4">
-              <p className="text-xs text-zinc-400">Rank #{index + 1}</p>
-              <p className="mt-1 text-sm font-semibold text-zinc-100">{item.title}</p>
-              <p className="mt-2 text-xs text-zinc-300">Score {item.score}</p>
-              <p className="mt-1 text-xs text-zinc-500">{item.organization}</p>
-            </div>
+            <div key={item.id} className="rounded-2xl border border-border bg-card p-4 shadow-sm">
+              <p className="text-xs text-muted-foreground">Rank #{index + 1}</p>
+              <p className="mt-1 text-sm font-semibold text-card-foreground">{item.title}</p>
+              <p className="mt-2 text-xs text-muted-foreground">Score {item.score}</p>
+              <p className="mt-1 text-xs text-muted-foreground">{item.organization}</p>
           ))}
         </div>
       </Card>
