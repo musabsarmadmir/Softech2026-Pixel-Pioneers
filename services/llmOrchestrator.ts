@@ -237,10 +237,22 @@ function clampText(value: string, maxLength: number): string {
 
 async function extractPdfText(file: File): Promise<string> {
   const pdfjsLib = await import('pdfjs-dist/legacy/build/pdf.mjs');
+
+  if (!pdfjsLib.GlobalWorkerOptions.workerSrc) {
+    try {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
+        'pdfjs-dist/build/pdf.worker.min.mjs',
+        import.meta.url,
+      ).toString();
+    } catch {
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
+        'https://cdn.jsdelivr.net/npm/pdfjs-dist@5.2.133/build/pdf.worker.min.mjs';
+    }
+  }
+
   const buffer = await file.arrayBuffer();
   const loadingTask = pdfjsLib.getDocument({
     data: buffer,
-    disableWorker: true,
   } as any);
   const pdf = await loadingTask.promise;
 
