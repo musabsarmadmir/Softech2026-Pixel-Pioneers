@@ -144,7 +144,7 @@ export function ProfileForm() {
         </div>
 
         <div className="grid gap-4 lg:grid-cols-[1fr_0.95fr]">
-          <div className="space-y-4 rounded-2xl border border-zinc-700 bg-zinc-900/50 p-4">
+          <div className="space-y-4 rounded-2xl border border-border bg-card p-4">
             <div className="space-y-2">
               <FieldLabel title="Skills" hint="Add relevant tools, technologies, and strengths separated by commas." />
               <Input placeholder="Skills (comma separated)" {...form.register('skills')} />
@@ -166,7 +166,7 @@ export function ProfileForm() {
             </div>
           </div>
 
-          <div className="space-y-4 rounded-2xl border border-zinc-700 bg-zinc-900/50 p-4">
+          <div className="space-y-4 rounded-2xl border border-border bg-card p-4">
             <div className="space-y-2">
               <FieldLabel title="Experience" hint="Use total years across internships, projects, freelance, or work." />
               <Input
@@ -184,11 +184,11 @@ export function ProfileForm() {
               />
             </div>
 
-            <div className="rounded-2xl border border-cyan-500/30 bg-cyan-500/10 p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-700">Preferred types supported</p>
+            <div className="rounded-2xl border border-cyan-200 bg-cyan-50 p-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-900">Preferred types supported</p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {opportunityOptions.map((type) => (
-                  <Badge key={type} variant="outline" className="border-zinc-600 text-foreground">
+                  <Badge key={type} variant="outline" className="border-cyan-300 text-cyan-900">
                     {type}
                   </Badge>
                 ))}
@@ -197,10 +197,10 @@ export function ProfileForm() {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-zinc-700 bg-zinc-900/50 p-4">
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-card p-4">
           <div>
-            <p className="text-sm font-medium text-zinc-50">Ready when your profile is complete.</p>
-            <p className="mt-1 text-xs text-zinc-100">The profile is saved locally and reused across inbox analysis and ranking.</p>
+            <p className="text-sm font-medium text-foreground">Ready when your profile is complete.</p>
+            <p className="mt-1 text-xs text-muted-foreground">The profile is saved locally and reused across inbox analysis and ranking.</p>
           </div>
           <Button type="submit">Save Profile</Button>
         </div>
