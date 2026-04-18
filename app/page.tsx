@@ -5,84 +5,116 @@ import { Button } from '@/components/ui/button';
 
 export default function HomePage() {
   return (
-    <div className="space-y-6">
-      <section className="grid gap-5 lg:grid-cols-[1.25fr_0.95fr]">
-        <Card className="space-y-6 p-6 md:p-8">
-          <div className="space-y-5">
-            <div className="flex flex-wrap items-center gap-3">
-              <p className="inline-flex w-fit items-center rounded-full border border-blue-400/40 bg-blue-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-blue-200">
-                SOFTEC 2026 Theme Prototype
-              </p>
-              <span className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/60 px-3 py-1 text-xs text-zinc-300">
-                <Sparkles className="h-3.5 w-3.5 text-blue-300" /> Built for student opportunity discovery
-              </span>
-            </div>
-            <h1 className="max-w-3xl text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
-              Pixel Pioneers turns inbox noise into ranked next steps.
-            </h1>
-            <p className="max-w-2xl text-base leading-7 text-zinc-300 md:text-lg">
-              Parse messy student inboxes, detect real opportunities, extract the fields that matter, and rank them by fit,
-              urgency, and completeness. The result is a cleaner workflow, not just another AI summary.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <Button asChild size="lg">
-                <Link href="/inbox">
-                  Start Demo <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button variant="outline" asChild size="lg">
-                <Link href="/profile">Configure Profile</Link>
-              </Button>
-            </div>
-          </div>
+    <div className="space-y-12">
+      {/* Status Pill */}
+      <div className="flex justify-center">
+        <p className="inline-flex w-fit items-center rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-primary">
+          Only for our college students
+        </p>
+      </div>
 
-          <div className="grid gap-3 sm:grid-cols-3">
-            {[
-              ['Opportunity fit', 'Ranks by profile match and experience depth.', Target],
-              ['Deadline urgency', 'Highlights items that need action fast.', Clock3],
-              ['Spam filtering', 'Keeps fake or irrelevant content out of the way.', ShieldAlert],
-            ].map(([title, description, Icon]) => (
-              <div key={title as string} className="rounded-2xl border border-zinc-800 bg-zinc-950/40 p-4">
-                <Icon className="h-4 w-4 text-blue-300" />
-                <p className="mt-3 text-sm font-semibold text-zinc-100">{title as string}</p>
-                <p className="mt-1 text-sm leading-6 text-zinc-400">{description as string}</p>
+      {/* Hero Section - Centered */}
+      <section className="mx-auto max-w-4xl text-center space-y-8">
+        <div className="space-y-6">
+          <h1 className="text-5xl font-black leading-tight tracking-tight md:text-6xl lg:text-7xl">
+            Pixel Pioneers turns inbox noise into ranked next steps.
+          </h1>
+          <p className="mx-auto max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
+            Parse messy student inboxes, detect real opportunities, extract the fields that matter, and rank them by fit,
+            urgency, and completeness. The result is a cleaner workflow, not just another AI summary.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Button asChild size="lg">
+              <Link href="/inbox">
+                Start Demo <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+            <Button variant="outline" asChild size="lg">
+              <Link href="/profile">Configure Profile</Link>
+            </Button>
+          </div>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-3">
+          {[
+            ['Opportunity fit', 'Ranks by profile match and experience depth.', Target],
+            ['Deadline urgency', 'Highlights items that need action fast.', Clock3],
+            ['Spam filtering', 'Keeps fake or irrelevant content out of the way.', ShieldAlert],
+          ].map(([title, description, Icon]) => (
+            <div key={title as string} className="rounded-xl border border-border bg-card p-6 shadow-lg shadow-black/5">
+              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
+                <Icon className="h-6 w-6 text-primary" />
               </div>
-            ))}
-          </div>
-        </Card>
+              <p className="font-semibold text-card-foreground">{title as string}</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{description as string}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
-        <Card className="space-y-5 p-6 md:p-8">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">Pipeline layers</p>
-            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-zinc-50">A two-pass flow that stays easy to trust.</h2>
+      {/* Pipeline Section */}
+      <section className="mx-auto max-w-5xl">
+        <Card className="space-y-6 p-8">
+          <div className="text-center space-y-4">
+            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Pipeline layers</p>
+            <h2 className="text-3xl font-bold tracking-tight text-card-foreground">A two-pass flow that stays easy to trust.</h2>
           </div>
-          <div className="space-y-3 text-sm text-zinc-300">
-            <p className="flex items-center gap-3 rounded-2xl border border-zinc-800 bg-zinc-950/35 p-4"><Bot className="h-4 w-4 text-blue-300" /> Analyzer extracts structured opportunities from inbox content.</p>
-            <p className="flex items-center gap-3 rounded-2xl border border-zinc-800 bg-zinc-950/35 p-4"><Briefcase className="h-4 w-4 text-blue-300" /> Ranker scores fit, urgency, and completeness with stable weights.</p>
-            <p className="flex items-center gap-3 rounded-2xl border border-zinc-800 bg-zinc-950/35 p-4"><Layers3 className="h-4 w-4 text-blue-300" /> Results remain consistent, explainable, and judge-friendly.</p>
-            <p className="flex items-center gap-3 rounded-2xl border border-zinc-800 bg-zinc-950/35 p-4"><Zap className="h-4 w-4 text-blue-300" /> Relative deadlines are normalized into strict dates where possible.</p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="flex items-start gap-4 rounded-xl border border-border bg-card p-6 shadow-sm">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                <Bot className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <p className="font-semibold text-card-foreground">Analyzer extracts structured opportunities from inbox content.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4 rounded-xl border border-border bg-card p-6 shadow-sm">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                <Briefcase className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <p className="font-semibold text-card-foreground">Ranker scores fit, urgency, and completeness with stable weights.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4 rounded-xl border border-border bg-card p-6 shadow-sm">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                <Layers3 className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <p className="font-semibold text-card-foreground">Results remain consistent, explainable, and judge-friendly.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4 rounded-xl border border-border bg-card p-6 shadow-sm">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                <Zap className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <p className="font-semibold text-card-foreground">Relative deadlines are normalized into strict dates where possible.</p>
+              </div>
+            </div>
           </div>
-          <div className="rounded-2xl border border-blue-500/20 bg-blue-500/5 p-4 text-sm text-blue-100/80">
+          <div className="rounded-xl border border-primary/20 bg-primary/5 p-6 text-sm text-primary/80">
             Best for demo flows where the user needs a fast visual story: profile, inbox, ranking, then action.
           </div>
         </Card>
       </section>
 
-      <section className="grid gap-4 md:grid-cols-3">
-        <Card className="space-y-3 p-5">
-          <p className="text-xs uppercase tracking-[0.18em] text-zinc-400">1. Profile Intelligence</p>
-          <h3 className="text-base font-semibold text-zinc-50">Structured onboarding</h3>
-          <p className="text-sm leading-6 text-zinc-300">Profile fields, financial need, and experience depth feed the ranking engine.</p>
+      {/* Process Steps */}
+      <section className="grid gap-6 md:grid-cols-3">
+        <Card className="space-y-4 p-6">
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">1. Profile Intelligence</p>
+          <h3 className="text-xl font-bold text-card-foreground">Structured onboarding</h3>
+          <p className="text-sm leading-relaxed text-muted-foreground">Profile fields, financial need, and experience depth feed the ranking engine.</p>
         </Card>
-        <Card className="space-y-3 p-5">
-          <p className="text-xs uppercase tracking-[0.18em] text-zinc-400">2. Inbox Parsing</p>
-          <h3 className="text-base font-semibold text-zinc-50">Batch extraction</h3>
-          <p className="text-sm leading-6 text-zinc-300">Emails and screenshots are classified into opportunity and non-opportunity buckets.</p>
+        <Card className="space-y-4 p-6">
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">2. Inbox Parsing</p>
+          <h3 className="text-xl font-bold text-card-foreground">Batch extraction</h3>
+          <p className="text-sm leading-relaxed text-muted-foreground">Emails and screenshots are classified into opportunity and non-opportunity buckets.</p>
         </Card>
-        <Card className="space-y-3 p-5">
-          <p className="text-xs uppercase tracking-[0.18em] text-zinc-400">3. Personalized Ranking</p>
-          <h3 className="text-base font-semibold text-zinc-50">Stable output</h3>
-          <p className="text-sm leading-6 text-zinc-300">Weighted scoring and explanation blocks make the final list easier to trust.</p>
+        <Card className="space-y-4 p-6">
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">3. Personalized Ranking</p>
+          <h3 className="text-xl font-bold text-card-foreground">Stable output</h3>
+          <p className="text-sm leading-relaxed text-muted-foreground">Weighted scoring and explanation blocks make the final list easier to trust.</p>
         </Card>
       </section>
     </div>

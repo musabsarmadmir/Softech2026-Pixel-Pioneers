@@ -213,16 +213,16 @@ export function rankDeterministically(
 }
 
 export function urgencyColor(level: RankedOpportunity['urgencyLevel']): string {
-  if (level === 'high') return 'text-red-300 bg-red-500/20 border-red-500/40';
-  if (level === 'medium') return 'text-amber-300 bg-amber-500/20 border-amber-500/40';
-  if (level === 'low') return 'text-emerald-300 bg-emerald-500/20 border-emerald-500/40';
-  if (level === 'expired') return 'text-zinc-300 bg-zinc-500/20 border-zinc-500/40';
-  return 'text-sky-300 bg-sky-500/20 border-sky-500/40';
+  if (level === 'high') return 'text-red-700 bg-red-500/10 border-red-500/20';
+  if (level === 'medium') return 'text-amber-700 bg-amber-500/10 border-amber-500/20';
+  if (level === 'low') return 'text-emerald-700 bg-emerald-500/10 border-emerald-500/20';
+  if (level === 'expired') return 'text-muted-foreground bg-muted border-border';
+  return 'text-primary bg-primary/10 border-primary/20';
 }
 
 export function scoreColor(score: number): string {
-  if (score >= 85) return 'text-emerald-300';
-  if (score >= 70) return 'text-cyan-300';
-  if (score >= 55) return 'text-amber-300';
-  return 'text-rose-300';
+  if (score >= 85) return 'text-emerald-700';
+  if (score >= 70) return 'text-cyan-700';
+  if (score >= 55) return 'text-amber-700';
+  return 'text-rose-700';
 }

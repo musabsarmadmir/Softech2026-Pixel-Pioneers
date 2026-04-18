@@ -32,8 +32,8 @@ const opportunityOptions: OpportunityType[] = ['internship', 'scholarship', 'com
 function FieldLabel({ title, hint }: { title: string; hint?: string }) {
   return (
     <div className="space-y-1">
-      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-400">{title}</p>
-      {hint ? <p className="text-xs leading-5 text-zinc-500">{hint}</p> : null}
+      <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{title}</p>
+      {hint ? <p className="text-xs leading-relaxed text-muted-foreground/80">{hint}</p> : null}
     </div>
   );
 }

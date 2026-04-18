@@ -19,33 +19,31 @@ export default function ResultsPage() {
   return (
     <div className="space-y-6">
       <section className="grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
-        <Card className="space-y-5 p-6 md:p-7">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-blue-200/80">Ranked Opportunities</p>
-              <h1 className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">Priority list with clear next actions.</h1>
-              <p className="mt-2 max-w-2xl text-sm leading-6 text-zinc-300 md:text-base">
+        <Card className="space-y-6 p-8">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="space-y-3">
+              <p className="text-xs font-semibold uppercase tracking-wider text-primary">Ranked Opportunities</p>
+              <h1 className="text-4xl font-bold tracking-tight text-foreground">Priority list with clear next actions.</h1>
+              <p className="max-w-2xl text-muted-foreground leading-relaxed">
                 Sorted by deterministic score: 40% fit, 30% urgency, 30% completeness.
               </p>
             </div>
-            <div className="flex gap-2">
-              <Button type="button" variant="outline" onClick={saveCurrentAnalysis}>
-                <Save className="mr-1 h-4 w-4" /> Save Analysis
-              </Button>
-            </div>
+            <Button type="button" variant="outline" onClick={saveCurrentAnalysis}>
+              <Save className="mr-2 h-4 w-4" /> Save Analysis
+            </Button>
           </div>
-          <div className="grid gap-3 sm:grid-cols-3">
-            <div className="rounded-2xl border border-zinc-800 bg-zinc-950/35 p-4">
-              <p className="text-xs uppercase tracking-wide text-zinc-400">Total ranked</p>
-              <p className="mt-1 text-2xl font-semibold text-zinc-100">{ranked.length}</p>
+          <div className="grid gap-4 sm:grid-cols-3">
+            <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Total ranked</p>
+              <p className="mt-2 text-3xl font-bold text-foreground">{ranked.length}</p>
             </div>
-            <div className="rounded-2xl border border-zinc-800 bg-zinc-950/35 p-4">
-              <p className="text-xs uppercase tracking-wide text-zinc-400">Strict deadlines</p>
-              <p className="mt-1 text-2xl font-semibold text-zinc-100">{deadlineCount}</p>
+            <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Strict deadlines</p>
+              <p className="mt-2 text-3xl font-bold text-foreground">{deadlineCount}</p>
             </div>
-            <div className="rounded-2xl border border-zinc-800 bg-zinc-950/35 p-4">
-              <p className="text-xs uppercase tracking-wide text-zinc-400">Highest score</p>
-              <p className="mt-1 text-2xl font-semibold text-blue-200">{topScore}</p>
+            <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Highest score</p>
+              <p className="mt-2 text-3xl font-bold text-primary">{topScore}</p>
             </div>
           </div>
         </Card>
