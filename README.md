@@ -195,5 +195,5 @@ Recommended: add an MIT License for open collaboration.
 
 ## 14. Author
 - Musab Sarmad Mir: https://github.com/musabsarmadmir
-- Sajeel Ahmad
+- Sajeel Ahmad: https://github.com/stormcyber01
 - Repository: https://github.com/musabsarmadmir/Softech-2026---Pixel-Pioneers
