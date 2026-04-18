@@ -83,6 +83,7 @@ export default function ResultsPage() {
               <p className="mt-1 text-sm font-semibold text-card-foreground">{item.title}</p>
               <p className="mt-2 text-xs text-muted-foreground">Score {item.score}</p>
               <p className="mt-1 text-xs text-muted-foreground">{item.organization}</p>
+            </div>
           ))}
         </div>
       </Card>
