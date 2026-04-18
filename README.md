@@ -8,7 +8,12 @@
 ![Groq](https://img.shields.io/badge/Groq-LLM-orange?style=for-the-badge)
 ![Hackathon](https://img.shields.io/badge/FAST%20Softec-AI%20Hackathon-blueviolet?style=for-the-badge)
 
-## 1. Problem Statement
+## 1. Project Title + Tagline
+**Pixel Pioneers**
+
+AI Opportunity Copilot for Students: turn inbox chaos into prioritized, deadline-aware action.
+
+## 2. Problem Statement
 Students receive opportunities from many channels (email dumps, forwarded screenshots, random announcements), but the signal is buried in noise. Important deadlines are missed, fake opportunities slip through, and decision quality suffers under time pressure.
 
 Why this matters:
@@ -16,7 +21,7 @@ Why this matters:
 - Manual triage is slow and inconsistent.
 - Most tools do not personalize ranking to a student profile.
 
-## 2. Solution Overview
+## 3. Solution Overview
 Pixel Pioneers is a web app that ingests batched inbox content (text + screenshots), extracts structured opportunities with an AI analyzer, filters spam/fake signals, and ranks valid opportunities using deterministic scoring.
 
 Core idea:
@@ -24,7 +29,7 @@ Core idea:
 - Deterministic logic handles explainable ranking.
 - The user gets a clear, actionable priority list instead of raw inbox clutter.
 
-## 3. Key Features
+## 4. Key Features
 - Batch inbox parsing from pasted email text.
 - Screenshot-based extraction using multimodal LLM inputs.
 - Spam/non-opportunity detection and filtering.
@@ -42,7 +47,7 @@ Core idea:
 - Save up to last 20 analysis sessions in local storage.
 - Seeded fallback data for demo resilience.
 
-## 4. Tech Stack
+## 5. Tech Stack
 ### Frontend
 - Next.js 15 (App Router)
 - React 19
@@ -68,7 +73,7 @@ Core idea:
 - Autoprefixer
 - npm scripts (`dev`, `build`, `start`, `lint`, `typecheck`)
 
-## 5. How It Works
+## 6. How It Works
 1. User configures a student profile (skills, interests, preferred opportunity type, financial need, experience).
 2. User pastes batched inbox content and optionally uploads screenshots.
 3. Analyzer LLM extracts structured opportunity objects and classifies spam/non-opportunities.
@@ -77,9 +82,9 @@ Core idea:
 6. Deterministic scoring engine computes final ranked order with urgency badges and breakdowns.
 7. User reviews cards, timelines, and action checklist; can save the analysis snapshot.
 
-## 6. Screenshots / Demo Section
-- Live demo: `https://your-demo-url-here`
-- Demo video: `https://your-demo-video-url-here`
+## 7. Screenshots / Demo Section
+- Live demo: Coming soon
+- Demo video: Coming soon
 
 Placeholders:
 
@@ -89,7 +94,7 @@ Placeholders:
 ![Deadline Timeline](./public/demo/deadline-timeline.png)
 ```
 
-## 7. Installation & Setup
+## 8. Installation & Setup
 ### Prerequisites
 - Node.js 18+
 - npm 9+
@@ -123,7 +128,7 @@ npm run build
 npm run start
 ```
 
-## 8. Usage
+## 9. Usage
 1. Open `/profile` and fill student profile details.
 2. Open `/inbox` and paste batched emails (separated entries supported).
 3. Optionally upload screenshot images.
@@ -132,34 +137,34 @@ npm run start
 6. Open `/results` to inspect ranked opportunities, urgency levels, and checklists.
 7. Save analysis for later comparison.
 
-## 9. Project Structure
+## 10. Project Structure
 ```text
 Softech-2026---Pixel-Pioneers/
-├─ app/
-│  ├─ page.tsx                 # Landing page
-│  ├─ inbox/page.tsx           # Inbox parsing workflow
-│  ├─ profile/page.tsx         # Student profile setup
-│  ├─ results/page.tsx         # Ranked output and timeline
-│  └─ history/page.tsx         # Saved analysis sessions
-├─ components/
-│  ├─ forms/                   # Profile/inbox/resume form components
-│  ├─ cards/                   # Opportunity and chart cards
-│  ├─ timeline/                # Deadline visualization
-│  ├─ navigation/              # App navigation shell
-│  ├─ shared/                  # Global app state providers
-│  └─ ui/                      # Reusable UI primitives
-├─ services/
-│  └─ llmOrchestrator.ts       # Analyzer/ranker orchestration with model fallback
-├─ utils/
-│  └─ scoringEngine.ts         # Deterministic weighted ranking
-├─ types/
-│  └─ opportunity.ts           # Core domain types
-├─ constants/
-│  └─ sampleData.ts            # Seed fallback/demo data
-└─ public/                     # Static assets
+|-- app/
+|   |-- page.tsx                 # Landing page
+|   |-- inbox/page.tsx           # Inbox parsing workflow
+|   |-- profile/page.tsx         # Student profile setup
+|   |-- results/page.tsx         # Ranked output and timeline
+|   `-- history/page.tsx         # Saved analysis sessions
+|-- components/
+|   |-- forms/                   # Profile/inbox/resume form components
+|   |-- cards/                   # Opportunity and chart cards
+|   |-- timeline/                # Deadline visualization
+|   |-- navigation/              # App navigation shell
+|   |-- shared/                  # Global app state providers
+|   `-- ui/                      # Reusable UI primitives
+|-- services/
+|   `-- llmOrchestrator.ts       # Analyzer/ranker orchestration with model fallback
+|-- utils/
+|   `-- scoringEngine.ts         # Deterministic weighted ranking
+|-- types/
+|   `-- opportunity.ts           # Core domain types
+|-- constants/
+|   `-- sampleData.ts            # Seed fallback/demo data
+`-- public/                      # Static assets
 ```
 
-## 10. Future Improvements / Roadmap
+## 11. Future Improvements / Roadmap
 - Gmail/Outlook API integration for automatic inbox sync.
 - Resume PDF extraction pipeline re-enable with robust OCR fallback.
 - Explainability panel with score contribution visualizations.
@@ -168,7 +173,7 @@ Softech-2026---Pixel-Pioneers/
 - Analytics dashboard for opportunity conversion tracking.
 - Server-side secure API routing to avoid client-exposed provider key usage.
 
-## 11. Contributing
+## 12. Contributing
 Contributions are welcome.
 
 1. Fork the repository.
@@ -183,11 +188,12 @@ Contributions are welcome.
    - Why it changed
    - Screenshots (if UI-related)
 
-## 12. License
+## 13. License
 No license file is currently present in this repository.
 
 Recommended: add an MIT License for open collaboration.
 
-## 13. Author
-**Musab Sarmad Mir** && **Sajeel Ahmad**
+## 14. Author
+- Musab Sarmad Mir: https://github.com/musabsarmadmir
+- Sajeel Ahmad
 - Repository: https://github.com/musabsarmadmir/Softech-2026---Pixel-Pioneers
