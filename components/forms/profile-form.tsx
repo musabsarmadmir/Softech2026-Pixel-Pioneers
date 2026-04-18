@@ -4,6 +4,7 @@ import { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Badge } from '@/components/ui/badge';
 import { Card, CardDescription, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -25,6 +26,17 @@ const schema = z.object({
 });
 
 type FormValues = z.infer<typeof schema>;
+
+const opportunityOptions: OpportunityType[] = ['internship', 'scholarship', 'competition', 'job', 'research', 'exchange'];
+
+function FieldLabel({ title, hint }: { title: string; hint?: string }) {
+  return (
+    <div className="space-y-1">
+      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-400">{title}</p>
+      {hint ? <p className="text-xs leading-5 text-zinc-500">{hint}</p> : null}
+    </div>
+  );
+}
 
 export function ProfileForm() {
   const { profile, setProfile } = useAppState();
@@ -88,47 +100,108 @@ export function ProfileForm() {
   }
 
   return (
-    <Card className="space-y-4">
-      <div>
-        <CardTitle>Structured Student Profile</CardTitle>
+    <Card className="space-y-5 p-6 md:p-7">
+      <div className="space-y-2">
+        <CardTitle className="text-xl">Structured Student Profile</CardTitle>
         <CardDescription>
-          Form-based profile for deterministic matching. Use commas for lists and tech years as React:1.5.
+          Build a profile the ranker can actually use. Commas work for lists, and tech experience should use the
+          format React:1.5.
         </CardDescription>
       </div>
 
-      <form className="grid gap-3 md:grid-cols-2" onSubmit={form.handleSubmit(onSubmit)}>
-        <Input placeholder="Full name" {...form.register('fullName')} />
-        <Input placeholder="Degree / Program" {...form.register('degreeProgram')} />
-        <Input type="number" step="1" placeholder="Semester" {...form.register('semester')} />
-        <Input type="number" step="0.01" placeholder="CGPA" {...form.register('cgpa')} />
-        <Input className="md:col-span-2" placeholder="Skills (comma separated)" {...form.register('skills')} />
-        <Input className="md:col-span-2" placeholder="Interests (comma separated)" {...form.register('interests')} />
-        <Input
-          className="md:col-span-2"
-          placeholder="Preferred types (internship, scholarship, competition, job, research, exchange)"
-          {...form.register('preferredOpportunityTypes')}
-        />
-        <select
-          className="h-10 rounded-xl border border-border bg-zinc-900/60 px-3 text-sm text-zinc-100"
-          {...form.register('financialNeed')}
-        >
-          <option value="necessary">Necessary</option>
-          <option value="important">Important</option>
-          <option value="not-needed">Not needed</option>
-        </select>
-        <Input placeholder="Location preference" {...form.register('locationPreference')} />
-        <Input
-          type="number"
-          step="0.1"
-          placeholder="Overall experience years"
-          {...form.register('overallExperienceYears')}
-        />
-        <Input
-          className="md:col-span-2"
-          placeholder="Technology experience (React:1.8, Python:2.0, Node.js:1.2)"
-          {...form.register('technologyExperience')}
-        />
-        <div className="md:col-span-2">
+      <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="space-y-2">
+            <FieldLabel title="Identity" hint="Keep the degree name precise so matching stays accurate." />
+            <Input placeholder="Full name" {...form.register('fullName')} />
+          </div>
+          <div className="space-y-2">
+            <FieldLabel title="Program" hint="Include the department or major if it matters for matching." />
+            <Input placeholder="Degree / Program" {...form.register('degreeProgram')} />
+          </div>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-3">
+          <div className="space-y-2">
+            <FieldLabel title="Semester" hint="Used to filter student-only programs and eligibility." />
+            <Input type="number" step="1" placeholder="Semester" {...form.register('semester')} />
+          </div>
+          <div className="space-y-2">
+            <FieldLabel title="CGPA" hint="Supports merit-based and scholarship-oriented filtering." />
+            <Input type="number" step="0.01" placeholder="CGPA" {...form.register('cgpa')} />
+          </div>
+          <div className="space-y-2">
+            <FieldLabel title="Financial need" hint="Lets the ranker prioritize need-based opportunities." />
+            <select
+              className="h-10 rounded-xl border border-border bg-zinc-900/60 px-3 text-sm text-zinc-100 outline-none transition focus:border-cyan-400/60"
+              {...form.register('financialNeed')}
+            >
+              <option value="necessary">Necessary</option>
+              <option value="important">Important</option>
+              <option value="not-needed">Not needed</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="grid gap-4 lg:grid-cols-[1fr_0.95fr]">
+          <div className="space-y-4 rounded-2xl border border-zinc-800 bg-zinc-950/35 p-4">
+            <div className="space-y-2">
+              <FieldLabel title="Skills" hint="Add relevant tools, technologies, and strengths separated by commas." />
+              <Input placeholder="Skills (comma separated)" {...form.register('skills')} />
+            </div>
+            <div className="space-y-2">
+              <FieldLabel title="Interests" hint="These help signal direction when multiple opportunities fit equally well." />
+              <Input placeholder="Interests (comma separated)" {...form.register('interests')} />
+            </div>
+            <div className="space-y-2">
+              <FieldLabel title="Preferred opportunity types" hint="Only include the categories you want surfaced most often." />
+              <Input
+                placeholder="Preferred types (internship, scholarship, competition, job, research, exchange)"
+                {...form.register('preferredOpportunityTypes')}
+              />
+            </div>
+            <div className="space-y-2">
+              <FieldLabel title="Location preference" hint="Useful for remote, hybrid, city-specific, or international matching." />
+              <Input placeholder="Location preference" {...form.register('locationPreference')} />
+            </div>
+          </div>
+
+          <div className="space-y-4 rounded-2xl border border-zinc-800 bg-zinc-950/35 p-4">
+            <div className="space-y-2">
+              <FieldLabel title="Experience" hint="Use total years across internships, projects, freelance, or work." />
+              <Input
+                type="number"
+                step="0.1"
+                placeholder="Overall experience years"
+                {...form.register('overallExperienceYears')}
+              />
+            </div>
+            <div className="space-y-2">
+              <FieldLabel title="Technology experience" hint="Example: React:1.8, Python:2.0, Node.js:1.2" />
+              <Input
+                placeholder="Technology experience (React:1.8, Python:2.0, Node.js:1.2)"
+                {...form.register('technologyExperience')}
+              />
+            </div>
+
+            <div className="rounded-2xl border border-cyan-500/20 bg-cyan-500/5 p-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-200/80">Preferred types supported</p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {opportunityOptions.map((type) => (
+                  <Badge key={type} variant="outline" className="border-zinc-700 text-zinc-300">
+                    {type}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-zinc-800 bg-zinc-950/30 p-4">
+          <div>
+            <p className="text-sm font-medium text-zinc-100">Ready when your profile is complete.</p>
+            <p className="mt-1 text-xs text-zinc-400">The profile is saved locally and reused across inbox analysis and ranking.</p>
+          </div>
           <Button type="submit">Save Profile</Button>
         </div>
       </form>

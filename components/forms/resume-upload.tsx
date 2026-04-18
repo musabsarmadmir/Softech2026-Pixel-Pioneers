@@ -5,7 +5,7 @@ import { useDropzone } from 'react-dropzone';
 import { FileUp, Sparkles } from 'lucide-react';
 import { Card, CardDescription, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { extractProfileFromResumePdf, fileToAttachmentInput } from '@/services/llmOrchestrator';
+import { extractProfileFromResumePdf, extractResumeTextFromPdf, fileToAttachmentInput } from '@/services/llmOrchestrator';
 import { useAppState } from '@/components/shared/app-state-provider';
 
 export function ResumeUpload() {
@@ -20,7 +20,11 @@ export function ResumeUpload() {
       setLoading(true);
       try {
         const attachment = await fileToAttachmentInput(file);
-        const result = await extractProfileFromResumePdf({ resumePdf: attachment });
+        const extractedText = await extractResumeTextFromPdf(file);
+        const result = await extractProfileFromResumePdf({
+          resumePdf: attachment,
+          resumeText: extractedText.resumeText,
+        });
         if (!result.ok) {
           const reason = result.failures[0]?.reason ?? result.error;
           setStatus(`Could not parse resume right now: ${reason}`);

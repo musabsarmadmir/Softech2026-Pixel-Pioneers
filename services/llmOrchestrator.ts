@@ -32,6 +32,7 @@ type InboxAnalyzerInput = {
 
 type ResumeAnalyzerInput = {
   resumePdf: AttachmentInput;
+  resumeText?: string;
 };
 
 type RankerInput = {
@@ -229,6 +230,37 @@ function toVisionContent(
   return content;
 }
 
+function clampText(value: string, maxLength: number): string {
+  if (value.length <= maxLength) return value;
+  return `${value.slice(0, maxLength)}\n[truncated]`;
+}
+
+async function extractPdfText(file: File): Promise<string> {
+  const pdfjsLib = await import('pdfjs-dist/legacy/build/pdf.mjs');
+  const buffer = await file.arrayBuffer();
+  const loadingTask = pdfjsLib.getDocument({ data: buffer } as any);
+  const pdf = await loadingTask.promise;
+
+  const chunks: string[] = [];
+  const maxPages = Math.min(pdf.numPages, 8);
+
+  for (let pageNumber = 1; pageNumber <= maxPages; pageNumber += 1) {
+    const page = await pdf.getPage(pageNumber);
+    const content = await page.getTextContent();
+    const pageText = (content.items as Array<{ str?: string }>)
+      .map((item) => String(item.str ?? ''))
+      .join(' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    if (pageText) {
+      chunks.push(`Page ${pageNumber}: ${pageText}`);
+    }
+  }
+
+  return clampText(chunks.join('\n\n'), 12000);
+}
+
 async function callProvider(
   provider: GroqConfig,
   stage: PipelineStage,
@@ -380,9 +412,7 @@ export async function extractProfileFromResumePdf(
     task: 'resume_profile_structuring',
     resumeFileName: input.resumePdf.fileName,
     resumeMimeType: input.resumePdf.mimeType,
-    // Groq chat completions does not natively accept PDF blobs as image_url content.
-    // We pass the data URL as text context so extraction can still proceed when possible.
-    resumeDataUrl: input.resumePdf.dataUrl,
+    resumeText: clampText(input.resumeText ?? '', 12000),
     instructions: {
       sourceType: 'pdf',
       includeFinancialNeedLevel: ['necessary', 'important', 'not-needed'],
@@ -472,5 +502,13 @@ export async function fileToAttachmentInput(file: File): Promise<AttachmentInput
     fileName: file.name,
     mimeType: file.type,
     dataUrl,
+  };
+}
+
+export async function extractResumeTextFromPdf(file: File) {
+  return {
+    fileName: file.name,
+    mimeType: file.type,
+    resumeText: await extractPdfText(file),
   };
 }
