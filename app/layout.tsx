@@ -28,9 +28,9 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <AppStateProvider>
             <div className="relative min-h-screen overflow-x-hidden">
-              <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_10%_20%,rgba(56,189,248,0.15),transparent_25%),radial-gradient(circle_at_85%_15%,rgba(192,132,252,0.12),transparent_25%),radial-gradient(circle_at_50%_80%,rgba(45,212,191,0.1),transparent_30%),linear-gradient(180deg,#09090b_0%,#020617_100%)]" />
+              <div className="pointer-events-none fixed inset-0 -z-10 bg-[linear-gradient(180deg,#111827_0%,#0f172a_100%)]" />
               <AppNavigation />
-              <main className="mx-auto w-full max-w-7xl px-4 pb-12 pt-6 sm:px-6 lg:px-8">{children}</main>
+              <main className="mx-auto w-full max-w-7xl px-4 pb-14 pt-8 sm:px-6 lg:px-8">{children}</main>
             </div>
           </AppStateProvider>
         </ThemeProvider>

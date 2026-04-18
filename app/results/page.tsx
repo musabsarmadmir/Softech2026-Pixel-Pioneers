@@ -1,7 +1,6 @@
 'use client';
 
-import { Download, Save } from 'lucide-react';
-import { toPng } from 'html-to-image';
+import { Save } from 'lucide-react';
 import { useRef } from 'react';
 import { OpportunityCard } from '@/components/cards/opportunity-card';
 import { DeadlineTimeline } from '@/components/timeline/deadline-timeline';
@@ -17,25 +16,13 @@ export default function ResultsPage() {
   const deadlineCount = ranked.filter((item) => item.strictDateISO).length;
   const urgentCount = ranked.filter((item) => item.urgencyLevel === 'high').length;
 
-  async function exportDigestPng() {
-    if (!exportRef.current) return;
-    const dataUrl = await toPng(exportRef.current, {
-      backgroundColor: '#020617',
-      pixelRatio: 2,
-    });
-    const anchor = document.createElement('a');
-    anchor.download = `pixel-pioneers-digest-${Date.now()}.png`;
-    anchor.href = dataUrl;
-    anchor.click();
-  }
-
   return (
     <div className="space-y-6">
       <section className="grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
         <Card className="space-y-5 p-6 md:p-7">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-cyan-200/80">Ranked Opportunities</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-blue-200/80">Ranked Opportunities</p>
               <h1 className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">Priority list with clear next actions.</h1>
               <p className="mt-2 max-w-2xl text-sm leading-6 text-zinc-300 md:text-base">
                 Sorted by deterministic score: 40% fit, 30% urgency, 30% completeness.
@@ -44,9 +31,6 @@ export default function ResultsPage() {
             <div className="flex gap-2">
               <Button type="button" variant="outline" onClick={saveCurrentAnalysis}>
                 <Save className="mr-1 h-4 w-4" /> Save Analysis
-              </Button>
-              <Button type="button" onClick={exportDigestPng}>
-                <Download className="mr-1 h-4 w-4" /> Export PNG Digest
               </Button>
             </div>
           </div>
@@ -57,11 +41,11 @@ export default function ResultsPage() {
             </div>
             <div className="rounded-2xl border border-zinc-800 bg-zinc-950/35 p-4">
               <p className="text-xs uppercase tracking-wide text-zinc-400">Strict deadlines</p>
-              <p className="mt-1 text-2xl font-semibold text-amber-300">{deadlineCount}</p>
+              <p className="mt-1 text-2xl font-semibold text-zinc-100">{deadlineCount}</p>
             </div>
             <div className="rounded-2xl border border-zinc-800 bg-zinc-950/35 p-4">
               <p className="text-xs uppercase tracking-wide text-zinc-400">Highest score</p>
-              <p className="mt-1 text-2xl font-semibold text-emerald-300">{topScore}</p>
+              <p className="mt-1 text-2xl font-semibold text-blue-200">{topScore}</p>
             </div>
           </div>
         </Card>
@@ -72,7 +56,7 @@ export default function ResultsPage() {
               <h2 className="text-base font-semibold text-zinc-100">Ranking pulse</h2>
               <p className="mt-1 text-sm text-zinc-400">A quick read on urgency before you open individual cards.</p>
             </div>
-            <span className="rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-200">
+            <span className="rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-xs font-semibold text-blue-200">
               {urgentCount} urgent
             </span>
           </div>
@@ -80,13 +64,13 @@ export default function ResultsPage() {
             Open the top items first, then use the checklist and draft actions to move from ranking to execution.
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
-            <div className="rounded-2xl border border-cyan-500/20 bg-cyan-500/5 p-4">
-              <p className="text-xs uppercase tracking-wide text-cyan-200/80">Best-fit focus</p>
-              <p className="mt-1 text-sm text-cyan-50">Strongest match between profile, skills, and opportunity type.</p>
+            <div className="rounded-2xl border border-blue-500/20 bg-blue-500/5 p-4">
+              <p className="text-xs uppercase tracking-wide text-blue-200/80">Best-fit focus</p>
+              <p className="mt-1 text-sm text-blue-50">Strongest match between profile, skills, and opportunity type.</p>
             </div>
-            <div className="rounded-2xl border border-rose-500/20 bg-rose-500/5 p-4">
-              <p className="text-xs uppercase tracking-wide text-rose-200/80">Deadline pressure</p>
-              <p className="mt-1 text-sm text-rose-50">Items with shorter deadlines rise automatically to the top.</p>
+            <div className="rounded-2xl border border-zinc-700/70 bg-zinc-900/35 p-4">
+              <p className="text-xs uppercase tracking-wide text-zinc-300">Deadline pressure</p>
+              <p className="mt-1 text-sm text-zinc-200">Items with shorter deadlines rise automatically to the top.</p>
             </div>
           </div>
         </Card>

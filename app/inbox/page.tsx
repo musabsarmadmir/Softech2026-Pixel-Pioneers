@@ -65,7 +65,7 @@ export default function InboxPage() {
       <section className="grid gap-4 lg:grid-cols-[1.25fr_0.85fr]">
         <Card className="space-y-5 p-6 md:p-7">
           <div className="flex flex-wrap items-center gap-3">
-            <span className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-200">
+            <span className="inline-flex items-center gap-2 rounded-full border border-blue-400/30 bg-blue-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-blue-200">
               <Sparkles className="h-3.5 w-3.5" /> Inbox Workflow
             </span>
             <span className="rounded-full border border-border bg-secondary/60 px-3 py-1 text-xs text-zinc-300">
@@ -81,7 +81,7 @@ export default function InboxPage() {
           <div className="grid gap-3 sm:grid-cols-3">
             <div className="rounded-2xl border border-zinc-800 bg-zinc-950/40 p-4">
               <p className="text-xs uppercase tracking-wide text-zinc-400">Opportunities</p>
-              <p className="mt-1 text-2xl font-semibold text-emerald-300">{opportunities.length}</p>
+              <p className="mt-1 text-2xl font-semibold text-zinc-100">{opportunities.length}</p>
             </div>
             <div className="rounded-2xl border border-zinc-800 bg-zinc-950/40 p-4">
               <p className="text-xs uppercase tracking-wide text-zinc-400">Spam filtered</p>
@@ -96,24 +96,24 @@ export default function InboxPage() {
 
         <Card className="space-y-4 p-6 md:p-7">
           <div className="flex items-center gap-2">
-            <WandSparkles className="h-4 w-4 text-cyan-300" />
+            <WandSparkles className="h-4 w-4 text-blue-300" />
             <h2 className="text-base font-semibold text-zinc-100">What happens next</h2>
           </div>
           <div className="space-y-3 text-sm text-zinc-300">
             <p className="flex items-start gap-3 rounded-xl border border-zinc-800 bg-zinc-950/30 p-3">
-              <span className="mt-0.5 rounded-full bg-cyan-500/15 px-2 py-0.5 text-xs font-semibold text-cyan-200">1</span>
+              <span className="mt-0.5 rounded-full bg-blue-500/15 px-2 py-0.5 text-xs font-semibold text-blue-200">1</span>
               Extract structured opportunities from batched emails and screenshots.
             </p>
             <p className="flex items-start gap-3 rounded-xl border border-zinc-800 bg-zinc-950/30 p-3">
-              <span className="mt-0.5 rounded-full bg-emerald-500/15 px-2 py-0.5 text-xs font-semibold text-emerald-200">2</span>
+              <span className="mt-0.5 rounded-full bg-blue-500/15 px-2 py-0.5 text-xs font-semibold text-blue-200">2</span>
               Push the clean results through the deterministic ranker.
             </p>
             <p className="flex items-start gap-3 rounded-xl border border-zinc-800 bg-zinc-950/30 p-3">
-              <span className="mt-0.5 rounded-full bg-amber-500/15 px-2 py-0.5 text-xs font-semibold text-amber-200">3</span>
+              <span className="mt-0.5 rounded-full bg-blue-500/15 px-2 py-0.5 text-xs font-semibold text-blue-200">3</span>
               Review the final cards, deadlines, and task list.
             </p>
           </div>
-          <div className="rounded-2xl border border-cyan-500/20 bg-cyan-500/5 p-4 text-xs text-cyan-100/80">
+          <div className="rounded-2xl border border-blue-500/20 bg-blue-500/5 p-4 text-xs text-blue-100/80">
             Model trace stays hidden in user-facing mode so the UI only shows the final ranking outcome.
           </div>
         </Card>
@@ -131,7 +131,7 @@ export default function InboxPage() {
             <ShieldAlert className="h-5 w-5 text-rose-300" />
           </div>
           <div className="flex flex-wrap gap-2 text-xs text-zinc-300">
-            <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-emerald-200">{opportunities.length} opportunities</span>
+            <span className="rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-blue-200">{opportunities.length} opportunities</span>
             <span className="rounded-full border border-rose-500/30 bg-rose-500/10 px-3 py-1 text-rose-200">{spamItems.length} filtered items</span>
           </div>
           {spamItems.length > 0 ? (

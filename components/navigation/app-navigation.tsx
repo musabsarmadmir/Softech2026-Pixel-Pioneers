@@ -10,7 +10,6 @@ const navItems = [
   { label: 'Profile', href: '/profile' },
   { label: 'Inbox', href: '/inbox' },
   { label: 'Results', href: '/results' },
-  { label: 'History', href: '/history' },
 ] as const;
 
 export function AppNavigation() {
@@ -21,7 +20,7 @@ export function AppNavigation() {
       <Link
         key={item.href}
         href={item.href}
-        className="rounded-full px-3 py-1.5 text-sm font-medium text-zinc-300 transition-colors hover:bg-zinc-800 hover:text-zinc-100"
+        className="rounded-full px-3 py-1.5 text-sm font-medium text-zinc-300 transition-colors hover:bg-zinc-800/80 hover:text-zinc-100"
       >
         {item.label}
       </Link>
@@ -29,15 +28,15 @@ export function AppNavigation() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-zinc-950/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-zinc-950/85 backdrop-blur">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="inline-flex items-center gap-2 text-zinc-50">
-          <span className="rounded-lg bg-cyan-400/15 p-1.5 text-cyan-300">
+          <span className="rounded-lg bg-blue-500/15 p-1.5 text-blue-300">
             <Sparkles className="h-4 w-4" />
           </span>
           <div className="flex flex-col leading-tight">
             <span className="text-sm font-semibold tracking-wide">Pixel Pioneers</span>
-            <span className="text-[10px] uppercase text-zinc-400">SOFTEC 2026</span>
+            <span className="text-[10px] uppercase tracking-[0.14em] text-zinc-400">SOFTEC 2026</span>
           </div>
         </Link>
 
@@ -56,7 +55,7 @@ export function AppNavigation() {
 
       <nav
         className={cn(
-          'overflow-hidden border-t border-white/10 bg-zinc-950/95 px-4 transition-all md:hidden',
+          'overflow-hidden border-t border-white/10 bg-zinc-950/95 px-4 transition-all duration-200 md:hidden',
           mobileOpen ? 'max-h-72 py-3' : 'max-h-0 py-0',
         )}
       >
@@ -65,7 +64,7 @@ export function AppNavigation() {
             <Link
               key={item.href}
               href={item.href}
-              className="rounded-md px-3 py-2 text-sm font-medium text-zinc-300 transition-colors hover:bg-zinc-800 hover:text-zinc-100"
+              className="rounded-md px-3 py-2 text-sm font-medium text-zinc-300 transition-colors hover:bg-zinc-800/80 hover:text-zinc-100"
               onClick={() => setMobileOpen(false)}
             >
               {item.label}

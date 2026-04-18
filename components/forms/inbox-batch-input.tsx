@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { Inbox, UploadCloud } from 'lucide-react';
+import { UploadCloud } from 'lucide-react';
 import { Card, CardDescription, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
@@ -11,7 +11,7 @@ import { analyzeInboxBatch, fileToAttachmentInput } from '@/services/llmOrchestr
 import type { OpportunityItem } from '@/types/opportunity';
 
 export function InboxBatchInput() {
-  const { inboxRawText, setInboxRawText, profile, setExtractedItems, runMockGmailSync } = useAppState();
+  const { inboxRawText, setInboxRawText, profile, setExtractedItems } = useAppState();
   const [loading, setLoading] = useState(false);
   const [attachments, setAttachments] = useState<File[]>([]);
   const [status, setStatus] = useState('Paste 5-15 emails separated by --- and run AI extraction.');
@@ -61,16 +61,11 @@ export function InboxBatchInput() {
 
   return (
     <Card className="space-y-4">
-      <div className="flex items-center justify-between gap-3">
-        <div>
-          <CardTitle>Opportunity Inbox Parser</CardTitle>
-          <CardDescription>
-            Paste batched emails, optionally add screenshots, then classify opportunities vs spam.
-          </CardDescription>
-        </div>
-        <Button type="button" variant="outline" onClick={runMockGmailSync}>
-          <Inbox className="mr-1 h-4 w-4" /> Mock Gmail Sync
-        </Button>
+      <div>
+        <CardTitle>Opportunity Inbox Parser</CardTitle>
+        <CardDescription>
+          Paste batched emails, optionally add screenshots, then classify opportunities vs spam.
+        </CardDescription>
       </div>
 
       <Textarea

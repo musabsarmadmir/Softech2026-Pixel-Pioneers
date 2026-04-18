@@ -1,38 +1,14 @@
 'use client';
 
-import { useState } from 'react';
-import { CalendarClock, CheckCircle2, FileText, Link2, Mail, Sparkles, Target } from 'lucide-react';
+import { CalendarClock, CheckCircle2, Link2, Target } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { urgencyColor, scoreColor } from '@/utils/scoringEngine';
 import type { RankedOpportunity } from '@/types/opportunity';
-import { generateDraftEmailOrSop } from '@/services/llmOrchestrator';
-import { useAppState } from '@/components/shared/app-state-provider';
 import { ScorePieChart } from '@/components/cards/score-pie-chart';
 
 export function OpportunityCard({ item }: { item: RankedOpportunity }) {
-  const { profile } = useAppState();
-  const [draft, setDraft] = useState<string>('');
-  const [loading, setLoading] = useState(false);
-
-  async function generateDraft(tone: 'formal' | 'concise') {
-    setLoading(true);
-    try {
-      const result = await generateDraftEmailOrSop({
-        studentProfile: profile as unknown as Record<string, unknown>,
-        opportunity: item as unknown as Record<string, unknown>,
-        tone,
-      });
-
-      if (result.ok) {
-        setDraft(`${result.data.subject}\n\n${result.data.body}`);
-      }
-    } finally {
-      setLoading(false);
-    }
-  }
 
   return (
     <Card className="space-y-6 p-6">
@@ -127,32 +103,13 @@ export function OpportunityCard({ item }: { item: RankedOpportunity }) {
         </div>
       </div>
 
-      <div className="grid gap-3 rounded-2xl border border-zinc-800 bg-zinc-950/35 p-4 md:grid-cols-[1fr_auto] md:items-center">
-        <div className="flex flex-wrap gap-2 text-xs text-zinc-400">
-          {item.contactInfo.slice(0, 2).map((contact) => (
-            <span key={contact} className="inline-flex items-center gap-2 rounded-full border border-zinc-700 bg-zinc-900/60 px-3 py-1 text-zinc-300">
-              <Link2 className="h-3.5 w-3.5 text-cyan-300" /> {contact}
-            </span>
-          ))}
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <Button type="button" size="sm" onClick={() => generateDraft('formal')} disabled={loading}>
-            <Mail className="mr-1 h-4 w-4" /> Draft Email (Formal)
-          </Button>
-          <Button type="button" size="sm" variant="secondary" onClick={() => generateDraft('concise')} disabled={loading}>
-            <FileText className="mr-1 h-4 w-4" /> Draft SOP (Concise)
-          </Button>
-        </div>
+      <div className="flex flex-wrap gap-2 text-xs text-zinc-400">
+        {item.contactInfo.slice(0, 2).map((contact) => (
+          <span key={contact} className="inline-flex items-center gap-2 rounded-full border border-zinc-700 bg-zinc-900/60 px-3 py-1 text-zinc-300">
+            <Link2 className="h-3.5 w-3.5 text-cyan-300" /> {contact}
+          </span>
+        ))}
       </div>
-
-      {draft ? (
-        <div className="rounded-2xl border border-cyan-500/30 bg-cyan-500/10 p-4">
-          <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-200">
-            <Sparkles className="h-4 w-4" /> Generated Draft
-          </p>
-          <pre className="whitespace-pre-wrap text-sm leading-6 text-cyan-50">{draft}</pre>
-        </div>
-      ) : null}
     </Card>
   );
 }

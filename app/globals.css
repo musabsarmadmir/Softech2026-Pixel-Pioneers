@@ -3,31 +3,31 @@
 @tailwind utilities;
 
 :root {
-  --background: 222 47% 7%;
+  --background: 222 22% 9%;
   --foreground: 210 40% 98%;
-  --card: 224 39% 10%;
+  --card: 222 18% 13%;
   --card-foreground: 210 40% 98%;
-  --popover: 224 39% 10%;
+  --popover: 222 18% 13%;
   --popover-foreground: 210 40% 98%;
-  --primary: 188 94% 43%;
-  --primary-foreground: 222 47% 11%;
-  --secondary: 221 23% 21%;
+  --primary: 217 91% 60%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 222 15% 19%;
   --secondary-foreground: 210 40% 98%;
-  --muted: 221 23% 21%;
-  --muted-foreground: 215 20% 70%;
-  --accent: 170 76% 42%;
-  --accent-foreground: 222 47% 11%;
+  --muted: 222 15% 19%;
+  --muted-foreground: 217 11% 65%;
+  --accent: 217 91% 60%;
+  --accent-foreground: 210 40% 98%;
   --destructive: 0 72% 51%;
   --destructive-foreground: 210 40% 98%;
-  --border: 220 27% 20%;
-  --input: 220 27% 20%;
-  --ring: 188 94% 43%;
-  --radius: 1rem;
-  --chart-1: 188 94% 43%;
-  --chart-2: 158 64% 52%;
-  --chart-3: 35 92% 52%;
-  --chart-4: 262 83% 64%;
-  --chart-5: 353 82% 65%;
+  --border: 222 13% 24%;
+  --input: 222 13% 24%;
+  --ring: 217 91% 60%;
+  --radius: 0.9rem;
+  --chart-1: 217 91% 60%;
+  --chart-2: 220 30% 70%;
+  --chart-3: 220 20% 58%;
+  --chart-4: 220 16% 50%;
+  --chart-5: 220 12% 44%;
 }
 
 .light {
@@ -84,10 +84,10 @@
 
 @layer utilities {
   .glass-panel {
-    @apply border border-white/10 bg-white/5 backdrop-blur-xl;
+    @apply border border-white/10 bg-white/[0.03] backdrop-blur-sm;
   }
 
   .text-gradient {
-    @apply bg-gradient-to-r from-cyan-300 via-emerald-300 to-indigo-300 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-blue-200 to-blue-400 bg-clip-text text-transparent;
   }
 }
