@@ -11,7 +11,7 @@ const navItems = [
   { label: 'Inbox', href: '/inbox' },
   { label: 'Results', href: '/results' },
   { label: 'History', href: '/history' },
-];
+] as const;
 
 export function AppNavigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
