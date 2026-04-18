@@ -1,4 +1,4 @@
-type PipelineStage = 'analyzer' | 'ranker' | 'draft';
+type PipelineStage = 'analyzer' | 'resume' | 'ranker' | 'draft';
 
 type ProviderId = 'groq';
 
@@ -119,7 +119,7 @@ function extractJsonObject(raw: string): Record<string, unknown> {
 }
 
 function getModelForStage(provider: GroqConfig, stage: PipelineStage): string {
-  if (stage === 'analyzer') return provider.analyzerModel;
+  if (stage === 'analyzer' || stage === 'resume') return provider.analyzerModel;
   if (stage === 'ranker') return provider.rankerModel;
   return provider.draftModel;
 }
@@ -128,7 +128,7 @@ function getModelFallbacksForStage(
   provider: GroqConfig,
   stage: PipelineStage,
 ): string[] {
-  if (stage === 'analyzer') return provider.analyzerFallbackModels;
+  if (stage === 'analyzer' || stage === 'resume') return provider.analyzerFallbackModels;
   if (stage === 'ranker') return provider.rankerFallbackModels;
   return provider.draftFallbackModels;
 }
@@ -144,6 +144,29 @@ function getCandidateModelsForStage(
 }
 
 function getSystemPrompt(stage: PipelineStage): string {
+  if (stage === 'resume') {
+    return [
+      'You are Pixel Pioneers Resume Parser (open-source model).',
+      'Extract a structured student profile from resume text.',
+      'Return JSON only. No markdown.',
+      'Use null for unknown scalar fields and [] for unknown list fields.',
+      'Required schema:',
+      '{',
+      '  "fullName": "string | null",',
+      '  "degreeProgram": "string | null",',
+      '  "semester": "number | null",',
+      '  "cgpa": "number | null",',
+      '  "skills": ["string"],',
+      '  "interests": ["string"],',
+      '  "preferredOpportunityTypes": ["internship|scholarship|competition|job|research|exchange|other"],',
+      '  "financialNeed": "necessary|important|not-needed|null",',
+      '  "locationPreference": "string | null",',
+      '  "overallExperienceYears": "number | null",',
+      '  "technologyExperience": [{"technology":"string","years":"number"}]',
+      '}',
+    ].join('\n');
+  }
+
   if (stage === 'analyzer') {
       return [
         'You are Pixel Pioneers Analyzer (open-source model).',
@@ -439,7 +462,7 @@ export async function extractProfileFromResumePdf(
   };
 
   return executeWithFallback<Record<string, unknown>>(
-    'analyzer',
+    'resume',
     payload,
     options,
   );

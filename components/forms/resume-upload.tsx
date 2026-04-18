@@ -8,6 +8,46 @@ import { Button } from '@/components/ui/button';
 import { extractProfileFromResumePdf, extractResumeTextFromPdf, fileToAttachmentInput } from '@/services/llmOrchestrator';
 import { useAppState } from '@/components/shared/app-state-provider';
 
+function pickFirstString(data: Record<string, unknown>, keys: string[]): string | null {
+  for (const key of keys) {
+    const value = data[key];
+    if (typeof value === 'string' && value.trim()) return value.trim();
+  }
+  return null;
+}
+
+function pickFirstNumber(data: Record<string, unknown>, keys: string[]): number | null {
+  for (const key of keys) {
+    const value = data[key];
+    if (typeof value === 'number' && Number.isFinite(value)) return value;
+    if (typeof value === 'string' && value.trim()) {
+      const parsed = Number(value);
+      if (Number.isFinite(parsed)) return parsed;
+    }
+  }
+  return null;
+}
+
+function pickStringList(data: Record<string, unknown>, keys: string[]): string[] {
+  for (const key of keys) {
+    const value = data[key];
+    if (Array.isArray(value)) {
+      const list = value
+        .map((item) => String(item).trim())
+        .filter(Boolean);
+      if (list.length > 0) return list;
+    }
+    if (typeof value === 'string' && value.trim()) {
+      const list = value
+        .split(',')
+        .map((item) => item.trim())
+        .filter(Boolean);
+      if (list.length > 0) return list;
+    }
+  }
+  return [];
+}
+
 export function ResumeUpload() {
   const { profile, setProfile } = useAppState();
   const [loading, setLoading] = useState(false);
@@ -31,20 +71,32 @@ export function ResumeUpload() {
           return;
         }
 
-        const data = result.data;
-        setProfile({
+        const data = result.data as Record<string, unknown>;
+        const fullName = pickFirstString(data, ['fullName', 'name', 'studentName']);
+        const degreeProgram = pickFirstString(data, ['degreeProgram', 'degree', 'program']);
+        const semester = pickFirstNumber(data, ['semester']);
+        const cgpa = pickFirstNumber(data, ['cgpa', 'gpa']);
+        const skills = pickStringList(data, ['skills']);
+        const interests = pickStringList(data, ['interests']);
+
+        const updated = {
           ...profile,
-          fullName: String(data.fullName ?? profile.fullName),
-          degreeProgram: String(data.degreeProgram ?? profile.degreeProgram),
-          semester: Number(data.semester ?? profile.semester),
-          cgpa: Number(data.cgpa ?? profile.cgpa),
-          skills: Array.isArray(data.skills)
-            ? data.skills.map((item) => String(item))
-            : profile.skills,
-          interests: Array.isArray(data.interests)
-            ? data.interests.map((item) => String(item))
-            : profile.interests,
-        });
+          fullName: fullName ?? profile.fullName,
+          degreeProgram: degreeProgram ?? profile.degreeProgram,
+          semester: semester ?? profile.semester,
+          cgpa: cgpa ?? profile.cgpa,
+          skills: skills.length > 0 ? skills : profile.skills,
+          interests: interests.length > 0 ? interests : profile.interests,
+        };
+
+        const changed = JSON.stringify(updated) !== JSON.stringify(profile);
+        setProfile(updated);
+
+        if (!changed) {
+          setStatus('Resume parsed, but no matching structured fields were found to update.');
+          return;
+        }
+
         setStatus('Resume parsed successfully. Profile updated.');
       } catch (error) {
         const message = error instanceof Error ? error.message : 'Unknown error';
