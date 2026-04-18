@@ -96,20 +96,20 @@ export default function InboxPage() {
 
         <Card className="space-y-4 p-6 md:p-7">
           <div className="flex items-center gap-2">
-            <WandSparkles className="h-4 w-4 text-blue-300" />
-            <h2 className="text-base font-semibold text-zinc-100">What happens next</h2>
+            <WandSparkles className="h-4 w-4 text-blue-600" />
+            <h2 className="text-base font-semibold text-card-foreground">What happens next</h2>
           </div>
           <div className="space-y-3 text-sm text-card-foreground">
             <p className="flex items-start gap-3 rounded-xl border border-border bg-secondary/70 p-3">
-              <span className="mt-0.5 rounded-full bg-blue-500/15 px-2 py-0.5 text-xs font-semibold text-blue-200">1</span>
+              <span className="mt-0.5 rounded-full bg-blue-500/30 px-2 py-0.5 text-xs font-semibold text-blue-800">1</span>
               Extract structured opportunities from batched emails and screenshots.
             </p>
             <p className="flex items-start gap-3 rounded-xl border border-border bg-secondary/70 p-3">
-              <span className="mt-0.5 rounded-full bg-blue-500/15 px-2 py-0.5 text-xs font-semibold text-blue-200">2</span>
+              <span className="mt-0.5 rounded-full bg-blue-500/30 px-2 py-0.5 text-xs font-semibold text-blue-800">2</span>
               Push the clean results through the deterministic ranker.
             </p>
             <p className="flex items-start gap-3 rounded-xl border border-border bg-secondary/70 p-3">
-              <span className="mt-0.5 rounded-full bg-blue-500/15 px-2 py-0.5 text-xs font-semibold text-blue-200">3</span>
+              <span className="mt-0.5 rounded-full bg-blue-500/30 px-2 py-0.5 text-xs font-semibold text-blue-800">3</span>
               Review the final cards, deadlines, and task list.
             </p>
           </div>
@@ -131,8 +131,8 @@ export default function InboxPage() {
             <ShieldAlert className="h-5 w-5 text-rose-300" />
           </div>
           <div className="flex flex-wrap gap-2 text-xs text-foreground">
-            <span className="rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-blue-200">{opportunities.length} opportunities</span>
-            <span className="rounded-full border border-rose-500/30 bg-rose-500/10 px-3 py-1 text-rose-200">{spamItems.length} filtered items</span>
+            <span className="rounded-full border border-blue-500/60 bg-blue-500/25 px-3 py-1 font-semibold text-blue-800">{opportunities.length} opportunities</span>
+            <span className="rounded-full border border-rose-500/60 bg-rose-500/25 px-3 py-1 font-semibold text-rose-800">{spamItems.length} filtered items</span>
           </div>
           {spamItems.length > 0 ? (
             <div className="grid gap-3 md:grid-cols-2">
