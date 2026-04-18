@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { BrainCircuit } from 'lucide-react';
+import { ArrowRight, BrainCircuit, ShieldAlert, Sparkles, WandSparkles } from 'lucide-react';
 import { InboxBatchInput } from '@/components/forms/inbox-batch-input';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -17,6 +17,8 @@ export default function InboxPage() {
 
   const opportunities = extractedItems.filter((item) => item.isOpportunity);
   const spamItems = extractedItems.filter((item) => !item.isOpportunity);
+
+  const progressStage = extractedItems.length === 0 ? 1 : 2;
 
   async function runRanking() {
     setRunning(true);
@@ -59,38 +61,111 @@ export default function InboxPage() {
   }
 
   return (
-    <div className="space-y-5">
-      <div>
-        <h1 className="text-2xl font-semibold">Inbox Processing</h1>
-        <p className="text-sm text-zinc-300">Paste emails, add screenshots, classify opportunities, then rank by priority.</p>
-      </div>
-      <InboxBatchInput />
-      <Card className="space-y-3">
-        <h3 className="text-sm font-semibold uppercase tracking-wide text-zinc-300">Inbox Classification Snapshot</h3>
-        <p className="text-sm text-zinc-300">
-          Opportunities: <span className="font-semibold text-emerald-300">{opportunities.length}</span> | Spam/Non-opportunity:{' '}
-          <span className="font-semibold text-rose-300">{spamItems.length}</span>
-        </p>
-        {spamItems.length > 0 ? (
-          <div className="grid gap-2 md:grid-cols-2">
-            {spamItems.slice(0, 6).map((item) => (
-              <div key={item.id} className="rounded-xl border border-rose-500/40 bg-rose-500/10 p-3">
-                <p className="text-sm font-medium text-rose-200">{item.sourceEmailSubject}</p>
-                <p className="text-xs text-rose-100/80">{item.spamReason ?? 'Detected as non-opportunity content.'}</p>
-              </div>
-            ))}
+    <div className="space-y-6">
+      <section className="grid gap-4 lg:grid-cols-[1.25fr_0.85fr]">
+        <Card className="space-y-5 p-6 md:p-7">
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-200">
+              <Sparkles className="h-3.5 w-3.5" /> Inbox Workflow
+            </span>
+            <span className="rounded-full border border-border bg-secondary/60 px-3 py-1 text-xs text-zinc-300">
+              Step {progressStage} of 2
+            </span>
           </div>
-        ) : null}
-      </Card>
-      <Card className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <p className="text-sm text-zinc-200">{status}</p>
-          <p className="text-xs text-zinc-400">Model trace is intentionally hidden in user-facing mode.</p>
-        </div>
-        <Button type="button" onClick={runRanking} disabled={running}>
-          <BrainCircuit className="mr-1 h-4 w-4" /> {running ? 'Processing...' : 'Run Ranker + Deterministic Engine'}
-        </Button>
-      </Card>
+          <div className="space-y-2">
+            <h1 className="text-3xl font-semibold tracking-tight md:text-4xl">Inbox Processing</h1>
+            <p className="max-w-2xl text-sm leading-6 text-zinc-300 md:text-base">
+              Paste emails, attach screenshots, classify what matters, then move the strongest opportunities into a ranked action list.
+            </p>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-3">
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-950/40 p-4">
+              <p className="text-xs uppercase tracking-wide text-zinc-400">Opportunities</p>
+              <p className="mt-1 text-2xl font-semibold text-emerald-300">{opportunities.length}</p>
+            </div>
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-950/40 p-4">
+              <p className="text-xs uppercase tracking-wide text-zinc-400">Spam filtered</p>
+              <p className="mt-1 text-2xl font-semibold text-rose-300">{spamItems.length}</p>
+            </div>
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-950/40 p-4">
+              <p className="text-xs uppercase tracking-wide text-zinc-400">Pipeline</p>
+              <p className="mt-1 text-sm font-medium text-zinc-100">Extract, score, rank</p>
+            </div>
+          </div>
+        </Card>
+
+        <Card className="space-y-4 p-6 md:p-7">
+          <div className="flex items-center gap-2">
+            <WandSparkles className="h-4 w-4 text-cyan-300" />
+            <h2 className="text-base font-semibold text-zinc-100">What happens next</h2>
+          </div>
+          <div className="space-y-3 text-sm text-zinc-300">
+            <p className="flex items-start gap-3 rounded-xl border border-zinc-800 bg-zinc-950/30 p-3">
+              <span className="mt-0.5 rounded-full bg-cyan-500/15 px-2 py-0.5 text-xs font-semibold text-cyan-200">1</span>
+              Extract structured opportunities from batched emails and screenshots.
+            </p>
+            <p className="flex items-start gap-3 rounded-xl border border-zinc-800 bg-zinc-950/30 p-3">
+              <span className="mt-0.5 rounded-full bg-emerald-500/15 px-2 py-0.5 text-xs font-semibold text-emerald-200">2</span>
+              Push the clean results through the deterministic ranker.
+            </p>
+            <p className="flex items-start gap-3 rounded-xl border border-zinc-800 bg-zinc-950/30 p-3">
+              <span className="mt-0.5 rounded-full bg-amber-500/15 px-2 py-0.5 text-xs font-semibold text-amber-200">3</span>
+              Review the final cards, deadlines, and task list.
+            </p>
+          </div>
+          <div className="rounded-2xl border border-cyan-500/20 bg-cyan-500/5 p-4 text-xs text-cyan-100/80">
+            Model trace stays hidden in user-facing mode so the UI only shows the final ranking outcome.
+          </div>
+        </Card>
+      </section>
+
+      <InboxBatchInput />
+
+      <section className="grid gap-4 lg:grid-cols-[1fr_0.9fr]">
+        <Card className="space-y-4 p-6">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-zinc-300">Inbox Classification Snapshot</h3>
+              <p className="mt-1 text-sm text-zinc-400">Spam stays visible, but it is visually secondary to the real opportunities.</p>
+            </div>
+            <ShieldAlert className="h-5 w-5 text-rose-300" />
+          </div>
+          <div className="flex flex-wrap gap-2 text-xs text-zinc-300">
+            <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-emerald-200">{opportunities.length} opportunities</span>
+            <span className="rounded-full border border-rose-500/30 bg-rose-500/10 px-3 py-1 text-rose-200">{spamItems.length} filtered items</span>
+          </div>
+          {spamItems.length > 0 ? (
+            <div className="grid gap-3 md:grid-cols-2">
+              {spamItems.slice(0, 6).map((item) => (
+                <div key={item.id} className="rounded-2xl border border-rose-500/30 bg-rose-500/5 p-4">
+                  <p className="text-sm font-medium text-rose-100">{item.sourceEmailSubject}</p>
+                  <p className="mt-1 text-xs leading-5 text-rose-100/75">{item.spamReason ?? 'Detected as non-opportunity content.'}</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-950/30 p-4 text-sm text-zinc-400">
+              No spam was detected in the current batch.
+            </div>
+          )}
+        </Card>
+
+        <Card className="space-y-4 p-6">
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-zinc-300">Ranking Control</h3>
+            <p className="mt-1 text-sm text-zinc-400">Trigger the ranker after extraction to generate the final prioritized list.</p>
+          </div>
+          <div className="rounded-2xl border border-zinc-800 bg-zinc-950/30 p-4">
+            <p className="text-sm text-zinc-200">{status}</p>
+            <p className="mt-1 text-xs text-zinc-400">The app uses the model output, then applies deterministic ranking for stable results.</p>
+          </div>
+          <Button type="button" onClick={runRanking} disabled={running} className="w-full">
+            <BrainCircuit className="mr-1 h-4 w-4" />
+            {running ? 'Processing...' : 'Run Ranker + Deterministic Engine'}
+            <ArrowRight className="ml-1 h-4 w-4" />
+          </Button>
+        </Card>
+      </section>
     </div>
   );
 }
