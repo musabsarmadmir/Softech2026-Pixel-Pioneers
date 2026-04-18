@@ -51,38 +51,38 @@ export default function ResultsPage() {
         <Card className="space-y-4 p-6 md:p-7">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <h2 className="text-base font-semibold text-zinc-100">Ranking pulse</h2>
-              <p className="mt-1 text-sm text-zinc-400">A quick read on urgency before you open individual cards.</p>
+              <h2 className="text-base font-semibold text-card-foreground">Ranking pulse</h2>
+              <p className="mt-1 text-sm text-foreground">A quick read on urgency before you open individual cards.</p>
             </div>
             <span className="rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-xs font-semibold text-blue-200">
               {urgentCount} urgent
             </span>
           </div>
-          <div className="rounded-2xl border border-zinc-800 bg-zinc-950/30 p-4 text-sm text-zinc-300">
+          <div className="rounded-2xl border border-zinc-800 bg-zinc-950/30 p-4 text-sm text-card-foreground">
             Open the top items first, then use the checklist and draft actions to move from ranking to execution.
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-2xl border border-blue-500/20 bg-blue-500/5 p-4">
-              <p className="text-xs uppercase tracking-wide text-blue-200/80">Best-fit focus</p>
+              <p className="text-xs uppercase tracking-wide text-blue-200">Best-fit focus</p>
               <p className="mt-1 text-sm text-blue-50">Strongest match between profile, skills, and opportunity type.</p>
             </div>
             <div className="rounded-2xl border border-zinc-700/70 bg-zinc-900/35 p-4">
-              <p className="text-xs uppercase tracking-wide text-zinc-300">Deadline pressure</p>
-              <p className="mt-1 text-sm text-zinc-200">Items with shorter deadlines rise automatically to the top.</p>
+              <p className="text-xs uppercase tracking-wide text-card-foreground">Deadline pressure</p>
+              <p className="mt-1 text-sm text-card-foreground">Items with shorter deadlines rise automatically to the top.</p>
             </div>
           </div>
         </Card>
       </section>
 
       <Card className="space-y-2 p-6" ref={exportRef}>
-        <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">Digest Snapshot</h3>
+        <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-foreground">Digest Snapshot</h3>
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
           {ranked.slice(0, 6).map((item, index) => (
             <div key={item.id} className="rounded-2xl border border-border bg-card p-4 shadow-sm">
-              <p className="text-xs text-muted-foreground">Rank #{index + 1}</p>
+              <p className="text-xs text-foreground">Rank #{index + 1}</p>
               <p className="mt-1 text-sm font-semibold text-card-foreground">{item.title}</p>
-              <p className="mt-2 text-xs text-muted-foreground">Score {item.score}</p>
-              <p className="mt-1 text-xs text-muted-foreground">{item.organization}</p>
+              <p className="mt-2 text-xs text-foreground">Score {item.score}</p>
+              <p className="mt-1 text-xs text-foreground">{item.organization}</p>
             </div>
           ))}
         </div>

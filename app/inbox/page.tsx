@@ -65,10 +65,10 @@ export default function InboxPage() {
       <section className="grid gap-4 lg:grid-cols-[1.25fr_0.85fr]">
         <Card className="space-y-5 p-6 md:p-7">
           <div className="flex flex-wrap items-center gap-3">
-            <span className="inline-flex items-center gap-2 rounded-full border border-blue-400/30 bg-blue-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-blue-200">
+            <span className="inline-flex items-center gap-2 rounded-full border border-blue-500/50 bg-blue-500/25 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-blue-700">
               <Sparkles className="h-3.5 w-3.5" /> Inbox Workflow
             </span>
-            <span className="rounded-full border border-border bg-secondary/60 px-3 py-1 text-xs text-foreground">
+            <span className="rounded-full border border-border bg-secondary px-3 py-1 text-xs font-medium text-card-foreground">
               Step {progressStage} of 2
             </span>
           </div>

@@ -98,13 +98,13 @@ export function InboxBatchInput() {
         className="cursor-pointer rounded-2xl border border-dashed border-border bg-secondary/50 p-4 text-center"
       >
         <input {...getInputProps()} />
-        <UploadCloud className="mx-auto mb-2 h-5 w-5 text-muted-foreground" />
-        <p className="text-xs text-muted-foreground">Upload screenshot emails (single or multiple)</p>
-        {attachments.length > 0 ? <p className="mt-1 text-xs text-muted-foreground">{attachments.length} file(s) attached</p> : null}
+        <UploadCloud className="mx-auto mb-2 h-5 w-5 text-foreground" />
+        <p className="text-xs text-foreground">Upload screenshot emails (single or multiple)</p>
+        {attachments.length > 0 ? <p className="mt-1 text-xs text-foreground">{attachments.length} file(s) attached</p> : null}
       </div>
 
       <div className="flex items-center justify-between">
-        <p className="text-xs text-zinc-400">{status}</p>
+        <p className="text-xs text-foreground">{status}</p>
         <Button type="button" onClick={runExtraction} disabled={loading}>
           {loading ? 'Analyzing...' : 'Run Analyzer'}
         </Button>

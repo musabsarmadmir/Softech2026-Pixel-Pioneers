@@ -17,10 +17,10 @@ export default function HomePage() {
       <section className="mx-auto max-w-4xl text-center space-y-8">
         <div className="space-y-6">
           <h1 className="text-5xl font-black leading-tight tracking-tight md:text-6xl lg:text-7xl">
-            Pixel Pioneers turns inbox noise into ranked next steps.
+            Your inbox, rebuilt around what actually matters.
           </h1>
           <p className="mx-auto max-w-2xl text-lg leading-relaxed text-foreground md:text-xl">
-            Parse student inboxes, detect real opportunities, and turn them into a ranked action list.
+            Surface real opportunities instantly, cut through the noise, and keep your focus on what moves the needle.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button asChild size="lg">
@@ -92,7 +92,7 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-          <div className="rounded-xl border border-primary/20 bg-primary/5 p-6 text-sm text-primary/80">
+          <div className="rounded-xl border border-primary/20 bg-primary/5 p-6 text-sm text-foreground">
             Best for demo flows where the user needs a fast visual story: profile, inbox, ranking, then action.
           </div>
         </Card>

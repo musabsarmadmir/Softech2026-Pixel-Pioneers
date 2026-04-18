@@ -32,8 +32,8 @@ const opportunityOptions: OpportunityType[] = ['internship', 'scholarship', 'com
 function FieldLabel({ title, hint }: { title: string; hint?: string }) {
   return (
     <div className="space-y-1">
-      <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{title}</p>
-      {hint ? <p className="text-xs leading-relaxed text-muted-foreground/80">{hint}</p> : null}
+      <p className="text-xs font-semibold uppercase tracking-wider text-foreground">{title}</p>
+      {hint ? <p className="text-xs leading-relaxed text-foreground/75">{hint}</p> : null}
     </div>
   );
 }
@@ -185,10 +185,10 @@ export function ProfileForm() {
             </div>
 
             <div className="rounded-2xl border border-cyan-500/20 bg-cyan-500/5 p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-200/80">Preferred types supported</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-200">Preferred types supported</p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {opportunityOptions.map((type) => (
-                  <Badge key={type} variant="outline" className="border-zinc-700 text-zinc-300">
+                  <Badge key={type} variant="outline" className="border-zinc-700 text-foreground">
                     {type}
                   </Badge>
                 ))}
@@ -200,7 +200,7 @@ export function ProfileForm() {
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-zinc-800 bg-zinc-950/30 p-4">
           <div>
             <p className="text-sm font-medium text-zinc-100">Ready when your profile is complete.</p>
-            <p className="mt-1 text-xs text-zinc-400">The profile is saved locally and reused across inbox analysis and ranking.</p>
+            <p className="mt-1 text-xs text-zinc-200">The profile is saved locally and reused across inbox analysis and ranking.</p>
           </div>
           <Button type="submit">Save Profile</Button>
         </div>
