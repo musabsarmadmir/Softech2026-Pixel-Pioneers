@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 222 47% 7%;
+  --foreground: 210 40% 98%;
+  --card: 224 39% 10%;
+  --card-foreground: 210 40% 98%;
+  --popover: 224 39% 10%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 188 94% 43%;
+  --primary-foreground: 222 47% 11%;
+  --secondary: 221 23% 21%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 221 23% 21%;
+  --muted-foreground: 215 20% 70%;
+  --accent: 170 76% 42%;
+  --accent-foreground: 222 47% 11%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 220 27% 20%;
+  --input: 220 27% 20%;
+  --ring: 188 94% 43%;
+  --radius: 1rem;
+  --chart-1: 188 94% 43%;
+  --chart-2: 158 64% 52%;
+  --chart-3: 35 92% 52%;
+  --chart-4: 262 83% 64%;
+  --chart-5: 353 82% 65%;
+}
+
+.light {
+  --background: 213 60% 98%;
+  --foreground: 224 71% 4%;
+  --card: 0 0% 100%;
+  --card-foreground: 224 71% 4%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 224 71% 4%;
+  --primary: 188 94% 33%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 214 32% 91%;
+  --secondary-foreground: 222 47% 11%;
+  --muted: 214 32% 91%;
+  --muted-foreground: 215 16% 35%;
+  --accent: 170 76% 32%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 214 32% 84%;
+  --input: 214 32% 84%;
+  --ring: 188 94% 33%;
+  --chart-1: 188 94% 33%;
+  --chart-2: 158 64% 42%;
+  --chart-3: 35 92% 42%;
+  --chart-4: 262 83% 54%;
+  --chart-5: 353 82% 55%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body), ui-sans-serif, sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display), ui-sans-serif, sans-serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply border border-white/10 bg-white/5 backdrop-blur-xl;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-cyan-300 via-emerald-300 to-indigo-300 bg-clip-text text-transparent;
+  }
+}
