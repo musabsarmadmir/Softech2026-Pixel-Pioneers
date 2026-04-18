@@ -34,6 +34,13 @@ export function InboxBatchInput() {
     setLoading(true);
     setStatus('Running analyzer model...');
     try {
+      // Validate input content
+      if (!inboxRawText || inboxRawText.trim().length === 0) {
+        setStatus('Error: Please provide email content or text to analyze.');
+        setLoading(false);
+        return;
+      }
+
       const screenshotAttachments = await Promise.all(attachments.map((file) => fileToAttachmentInput(file)));
       const result = await analyzeInboxBatch({
         studentProfile: profile as unknown as Record<string, unknown>,
@@ -42,8 +49,18 @@ export function InboxBatchInput() {
       });
 
       if (!result.ok) {
-        const reason = result.failures[0]?.reason ?? result.error;
-        setStatus(`Analyzer failed: ${reason}`);
+        // Collect all failure reasons for debugging
+        const failureReasons = result.failures
+          .map((f) => f.reason)
+          .filter((r) => r && r.trim().length > 0);
+        
+        let errorMsg = result.error || 'Unknown error occurred';
+        if (failureReasons.length > 0) {
+          // Use the most specific error (usually the last one)
+          errorMsg = failureReasons[failureReasons.length - 1];
+        }
+        
+        setStatus(`Analyzer failed: ${errorMsg}`);
         return;
       }
 
@@ -52,8 +69,9 @@ export function InboxBatchInput() {
         : [];
       setExtractedItems(items);
       setStatus(`Extraction complete. Parsed ${items.length} items.`);
-    } catch {
-      setStatus('Extraction failed unexpectedly.');
+    } catch (error) {
+      const errorMsg = error instanceof Error ? error.message : 'Extraction failed unexpectedly';
+      setStatus(`Extraction failed: ${errorMsg}`);
     } finally {
       setLoading(false);
     }

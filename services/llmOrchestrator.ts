@@ -1,4 +1,4 @@
-type PipelineStage = 'analyzer' | 'resume' | 'ranker' | 'draft';
+type PipelineStage = 'analyzer' | 'ranker';
 
 type ProviderId = 'groq';
 
@@ -9,8 +9,6 @@ type GroqConfig = {
   analyzerFallbackModels: string[];
   rankerModel: string;
   rankerFallbackModels: string[];
-  draftModel: string;
-  draftFallbackModels: string[];
 };
 
 type OrchestratorOptions = {
@@ -30,20 +28,9 @@ type InboxAnalyzerInput = {
   screenshotAttachments?: AttachmentInput[];
 };
 
-type ResumeAnalyzerInput = {
-  resumePdf: AttachmentInput;
-  resumeText?: string;
-};
-
 type RankerInput = {
   studentProfile: Record<string, unknown>;
   extractedOpportunities: Record<string, unknown>[];
-};
-
-type DraftInput = {
-  studentProfile: Record<string, unknown>;
-  opportunity: Record<string, unknown>;
-  tone: 'formal' | 'concise';
 };
 
 type OrchestratorSuccess<T> = {
@@ -70,9 +57,9 @@ const GROQ_PROVIDER: GroqConfig = {
   endpoint: 'https://api.groq.com/openai/v1/chat/completions',
   apiKey: process.env.NEXT_PUBLIC_GROQ_API_KEY,
   analyzerModel:
-    process.env.NEXT_PUBLIC_GROQ_ANALYZER_MODEL ?? 'llama-3.3-70b-versatile',
+    process.env.NEXT_PUBLIC_GROQ_ANALYZER_MODEL ?? 'llava-1.5-7b-32k',
   analyzerFallbackModels: [
-    'llama-3.3-70b-versatile',
+    'llava-1.5-7b-32k',
     'llama-3.1-8b-instant',
   ],
   rankerModel:
@@ -80,14 +67,6 @@ const GROQ_PROVIDER: GroqConfig = {
     'meta-llama/llama-4-maverick-17b-128e-instruct',
   rankerFallbackModels: [
     'meta-llama/llama-4-maverick-17b-128e-instruct',
-    'llama-3.3-70b-versatile',
-    'llama-3.1-8b-instant',
-  ],
-  draftModel:
-    process.env.NEXT_PUBLIC_GROQ_DRAFT_MODEL ??
-    'meta-llama/llama-4-scout-17b-16e-instruct',
-  draftFallbackModels: [
-    'meta-llama/llama-4-scout-17b-16e-instruct',
     'llama-3.3-70b-versatile',
     'llama-3.1-8b-instant',
   ],
@@ -119,18 +98,18 @@ function extractJsonObject(raw: string): Record<string, unknown> {
 }
 
 function getModelForStage(provider: GroqConfig, stage: PipelineStage): string {
-  if (stage === 'analyzer' || stage === 'resume') return provider.analyzerModel;
+  if (stage === 'analyzer') return provider.analyzerModel;
   if (stage === 'ranker') return provider.rankerModel;
-  return provider.draftModel;
+  throw new Error(`Unknown pipeline stage: ${stage}`);
 }
 
 function getModelFallbacksForStage(
   provider: GroqConfig,
   stage: PipelineStage,
 ): string[] {
-  if (stage === 'analyzer' || stage === 'resume') return provider.analyzerFallbackModels;
+  if (stage === 'analyzer') return provider.analyzerFallbackModels;
   if (stage === 'ranker') return provider.rankerFallbackModels;
-  return provider.draftFallbackModels;
+  throw new Error(`Unknown pipeline stage: ${stage}`);
 }
 
 function getCandidateModelsForStage(
@@ -144,32 +123,9 @@ function getCandidateModelsForStage(
 }
 
 function getSystemPrompt(stage: PipelineStage): string {
-  if (stage === 'resume') {
-    return [
-      'You are Pixel Pioneers Resume Parser (open-source model).',
-      'Extract a structured student profile from resume text.',
-      'Return JSON only. No markdown.',
-      'Use null for unknown scalar fields and [] for unknown list fields.',
-      'Required schema:',
-      '{',
-      '  "fullName": "string | null",',
-      '  "degreeProgram": "string | null",',
-      '  "semester": "number | null",',
-      '  "cgpa": "number | null",',
-      '  "skills": ["string"],',
-      '  "interests": ["string"],',
-      '  "preferredOpportunityTypes": ["internship|scholarship|competition|job|research|exchange|other"],',
-      '  "financialNeed": "necessary|important|not-needed|null",',
-      '  "locationPreference": "string | null",',
-      '  "overallExperienceYears": "number | null",',
-      '  "technologyExperience": [{"technology":"string","years":"number"}]',
-      '}',
-    ].join('\n');
-  }
-
   if (stage === 'analyzer') {
-      return [
-        'You are Pixel Pioneers Analyzer (open-source model).',
+    return [
+      'You are Pixel Pioneers Analyzer (open-source model).',
       'Classify each input item as opportunity or spam/non-opportunity.',
       'Extract structured machine-readable fields from messy natural language.',
       'Resolve relative deadlines (e.g., tomorrow, next Friday, in 48 hours) and output strictDateISO when possible.',
@@ -223,12 +179,7 @@ function getSystemPrompt(stage: PipelineStage): string {
     ].join('\n');
   }
 
-  return [
-    'You are PaisaMaker Draft Writer.',
-    'Generate practical student-facing drafts, ensure student information is accurate before finalizing.',
-    'Return JSON only with schema:',
-    '{ "subject": "string", "body": "string", "tone": "formal|concise" }',
-  ].join('\n');
+  throw new Error(`Unknown pipeline stage: ${stage}`);
 }
 
 function toVisionContent(
@@ -251,52 +202,6 @@ function toVisionContent(
   }
 
   return content;
-}
-
-function clampText(value: string, maxLength: number): string {
-  if (value.length <= maxLength) return value;
-  return `${value.slice(0, maxLength)}\n[truncated]`;
-}
-
-async function extractPdfText(file: File): Promise<string> {
-  const pdfjsLib = await import('pdfjs-dist/legacy/build/pdf.mjs');
-
-  if (!pdfjsLib.GlobalWorkerOptions.workerSrc) {
-    try {
-      pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
-        'pdfjs-dist/build/pdf.worker.min.mjs',
-        import.meta.url,
-      ).toString();
-    } catch {
-      pdfjsLib.GlobalWorkerOptions.workerSrc =
-        'https://cdn.jsdelivr.net/npm/pdfjs-dist@5.2.133/build/pdf.worker.min.mjs';
-    }
-  }
-
-  const buffer = await file.arrayBuffer();
-  const loadingTask = pdfjsLib.getDocument({
-    data: buffer,
-  } as any);
-  const pdf = await loadingTask.promise;
-
-  const chunks: string[] = [];
-  const maxPages = Math.min(pdf.numPages, 8);
-
-  for (let pageNumber = 1; pageNumber <= maxPages; pageNumber += 1) {
-    const page = await pdf.getPage(pageNumber);
-    const content = await page.getTextContent();
-    const pageText = (content.items as Array<{ str?: string }>)
-      .map((item) => String(item.str ?? ''))
-      .join(' ')
-      .replace(/\s+/g, ' ')
-      .trim();
-
-    if (pageText) {
-      chunks.push(`Page ${pageNumber}: ${pageText}`);
-    }
-  }
-
-  return clampText(chunks.join('\n\n'), 12000);
 }
 
 async function callProvider(
@@ -344,8 +249,15 @@ async function callProvider(
 
   if (!response.ok) {
     const details = await response.text();
+    let errorDetail = details;
+    try {
+      const errorJson = JSON.parse(details);
+      errorDetail = errorJson.error?.message || errorJson.message || details;
+    } catch {
+      // If not JSON, use the raw details
+    }
     throw new Error(
-      `HTTP ${response.status} from Groq during ${stage}: ${details}`,
+      `HTTP ${response.status} from Groq during ${stage}: ${errorDetail}`,
     );
   }
 
@@ -359,7 +271,14 @@ async function callProvider(
   if (typeof rawContent === 'string') {
     text = rawContent;
   } else if (Array.isArray(rawContent)) {
-    text = rawContent.map((item) => item.text ?? '').join('\n');
+    text = rawContent
+      .filter((item) => typeof item === 'object' && item !== null && 'text' in item)
+      .map((item) => (item as { text?: string }).text ?? '')
+      .join('\n');
+  }
+
+  if (!text || text.trim() === '') {
+    throw new Error('Model returned empty response');
   }
 
   return {
@@ -442,32 +361,6 @@ export async function analyzeInboxBatch(
   );
 }
 
-export async function extractProfileFromResumePdf(
-  input: ResumeAnalyzerInput,
-  options: OrchestratorOptions = {},
-) {
-  const payload = {
-    task: 'resume_profile_structuring',
-    resumeFileName: input.resumePdf.fileName,
-    resumeMimeType: input.resumePdf.mimeType,
-    resumeText: clampText(input.resumeText ?? '', 12000),
-    instructions: {
-      sourceType: 'pdf',
-      includeFinancialNeedLevel: ['necessary', 'important', 'not-needed'],
-      includeExperience: {
-        overallYears: true,
-        technologySpecificYears: true,
-      },
-    },
-  };
-
-  return executeWithFallback<Record<string, unknown>>(
-    'resume',
-    payload,
-    options,
-  );
-}
-
 export async function generateReasonedRanking(
   input: RankerInput,
   options: OrchestratorOptions = {},
@@ -490,30 +383,6 @@ export async function generateReasonedRanking(
   );
 }
 
-export async function generateDraftEmailOrSop(
-  input: DraftInput,
-  options: OrchestratorOptions = {},
-) {
-  const payload = {
-    task: 'application_draft_generation',
-    tone: input.tone,
-    studentProfile: input.studentProfile,
-    opportunity: input.opportunity,
-    format: {
-      subject: true,
-      body: true,
-      shortChecklist: true,
-    },
-  };
-
-  return executeWithFallback<{
-    subject: string;
-    body: string;
-    tone: 'formal' | 'concise';
-    shortChecklist?: string[];
-  }>('draft', payload, options);
-}
-
 export function getOrchestratorReadiness() {
   return {
     ready: Boolean(GROQ_PROVIDER.apiKey),
@@ -523,7 +392,6 @@ export function getOrchestratorReadiness() {
     llmLayers: {
       analyzerConfigured: Boolean(GROQ_PROVIDER.analyzerModel),
       rankerConfigured: Boolean(GROQ_PROVIDER.rankerModel),
-      draftConfigured: Boolean(GROQ_PROVIDER.draftModel),
     },
   };
 }
@@ -540,13 +408,5 @@ export async function fileToAttachmentInput(file: File): Promise<AttachmentInput
     fileName: file.name,
     mimeType: file.type,
     dataUrl,
-  };
-}
-
-export async function extractResumeTextFromPdf(file: File) {
-  return {
-    fileName: file.name,
-    mimeType: file.type,
-    resumeText: await extractPdfText(file),
   };
 }
