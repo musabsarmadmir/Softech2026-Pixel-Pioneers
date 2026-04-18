@@ -189,6 +189,5 @@ No license file is currently present in this repository.
 Recommended: add an MIT License for open collaboration.
 
 ## 13. Author
-**Musab Sarmad Mir**
-- GitHub: https://github.com/musabsarmadmir
+**Musab Sarmad Mir** && **Sajeel Ahmad**
 - Repository: https://github.com/musabsarmadmir/Softech-2026---Pixel-Pioneers
