@@ -48,27 +48,27 @@ export default function ResultsPage() {
           </div>
         </Card>
 
-        <Card className="space-y-4 p-6 md:p-7">
-          <div className="flex items-center justify-between gap-3">
-            <div>
-              <h2 className="text-base font-semibold text-card-foreground">Ranking pulse</h2>
-              <p className="mt-1 text-sm text-foreground">A quick read on urgency before you open individual cards.</p>
+        <Card className="space-y-5 p-6 md:p-7">
+          <div className="flex items-start justify-between gap-3">
+            <div className="space-y-1.5">
+              <h2 className="text-lg font-bold tracking-tight text-card-foreground">Ranking pulse</h2>
+              <p className="max-w-sm text-sm leading-6 text-muted-foreground">A quick read on urgency before you open individual cards.</p>
             </div>
-            <span className="rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-xs font-semibold text-blue-200">
+            <span className="rounded-full border border-blue-300 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 dark:border-blue-400/40 dark:bg-blue-500/10 dark:text-blue-200">
               {urgentCount} urgent
             </span>
           </div>
-          <div className="rounded-2xl border border-zinc-800 bg-zinc-950/30 p-4 text-sm text-card-foreground">
+          <div className="rounded-2xl border border-border bg-muted/70 p-4 text-sm text-foreground">
             Open the top items first, then use the checklist and draft actions to move from ranking to execution.
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
-            <div className="rounded-2xl border border-blue-500/20 bg-blue-500/5 p-4">
-              <p className="text-xs uppercase tracking-wide text-blue-200">Best-fit focus</p>
-              <p className="mt-1 text-sm text-blue-50">Strongest match between profile, skills, and opportunity type.</p>
+            <div className="rounded-2xl border border-blue-300 bg-blue-50/80 p-4 dark:border-blue-400/30 dark:bg-blue-500/10">
+              <p className="text-xs uppercase tracking-wide text-blue-700 dark:text-blue-200">Best-fit focus</p>
+              <p className="mt-1 text-sm text-blue-900/80 dark:text-blue-100">Strongest match between profile, skills, and opportunity type.</p>
             </div>
-            <div className="rounded-2xl border border-zinc-700/70 bg-zinc-900/35 p-4">
+            <div className="rounded-2xl border border-border bg-secondary/85 p-4 dark:bg-secondary/60">
               <p className="text-xs uppercase tracking-wide text-card-foreground">Deadline pressure</p>
-              <p className="mt-1 text-sm text-card-foreground">Items with shorter deadlines rise automatically to the top.</p>
+              <p className="mt-1 text-sm text-foreground">Items with shorter deadlines rise automatically to the top.</p>
             </div>
           </div>
         </Card>
